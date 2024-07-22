@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{7b154058-31be-47ce-9c60-231467c1a46c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image1.bin">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Orc\Orc\Orc.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Attack01.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Attack02.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Attack03.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Death.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Hurt.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Idle.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Walk.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\MasterSimple.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\test.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\galletcity.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\galletcity_tiles.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\Artistinfo2.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\PathAndObjects.png">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
