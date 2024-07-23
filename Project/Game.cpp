@@ -1,6 +1,7 @@
 #include "Game.h"
 
 
+
 //Constructor
 
 Game::Game()
@@ -74,6 +75,7 @@ void Game::initKeys()
 //Functions
 void Game::initStates()
 {
+	this->states.push(new MainMenuState(this->mWindow, &this->supportedKeys));
 	this->states.push(new GameState(this->mWindow,&this->supportedKeys));
 }
 

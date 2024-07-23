@@ -42,6 +42,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -63,6 +66,9 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
