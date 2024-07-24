@@ -23,9 +23,12 @@ Entity::~Entity()
 void Entity::createSprite(sf::Texture* texture)
 {
 	this->texture = texture;
-	this->sprite->setTexture(*this->texture);
+	this->sprite = new sf::Sprite(*this->texture);
+	
 
 }
+
+
 
 //Functions
 void Entity::move(const float dt, const float dir_x, const float dir_y)
@@ -34,10 +37,22 @@ void Entity::move(const float dt, const float dir_x, const float dir_y)
 	{
 		this->sprite->move(dir_x * this->movementSpeed * dt, dir_y * this->movementSpeed * dt);
 	}
+	else
+	{
+		std::cout << "No sprite" << "\n";
+	}
 	
 
 }
 
+void Entity::setPosstion(const float x, const float y)
+{
+	if (this->sprite)
+	{
+		this->sprite->setPosition(x,y);
+	}
+
+}
 void Entity::update(const float& dt)
 {
 
@@ -47,6 +62,7 @@ void Entity::render(sf::RenderTarget* target)
 {
 	if (this->sprite)
 	{
+		
 		target->draw(*this->sprite);
 	}
 	

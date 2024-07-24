@@ -141,6 +141,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="State.h" />
   </ItemGroup>

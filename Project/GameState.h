@@ -1,13 +1,16 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 #include "State.h"
+
 class GameState :
     public State
 {
 private:
-    Entity player;
+    Player* player;
     //Functions
     void initKeybinds();
+    void initTextures();
+    void initPlayers();
 
 public:
     GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
