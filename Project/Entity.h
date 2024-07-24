@@ -18,10 +18,13 @@
 class Entity
 {
 private:
+	void initVariables();
 
 	//Can directly access by child classes
 protected:
-	sf::RectangleShape shape;
+	sf::Texture* texture;
+	sf::Sprite* sprite;
+
 
 	float movementSpeed;
 	
@@ -29,7 +32,10 @@ protected:
 public:
 	Entity();
 	virtual ~Entity();
+	//Component functions
+	void createSprite(sf::Texture* texture);
 	//Functions
+
 	virtual void move(const float dt, const float x, const float y);
 	virtual void update(const float& dt) ;
 	virtual void render(sf::RenderTarget* target);

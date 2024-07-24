@@ -28,6 +28,9 @@ private:
 	//Variables
 	sf::RenderWindow* mWindow;
 	sf::Event sfEvent;
+	std::vector<sf::VideoMode> videomodes;
+	sf::ContextSettings windowSettings;
+	bool fullscreen;
 	sf::Clock dtClock;
 	//Map mMap;
 	//Character mPlayer;
@@ -39,6 +42,7 @@ private:
 	
 
 	//Initialization
+	void initVariables();
 	void initWindow();
 	void initKeys();
 	void initStates();
