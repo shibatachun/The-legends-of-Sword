@@ -77,14 +77,25 @@ void MainMenuState::initKeybinds()
 }
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button((this->window->getSize().x/2.f)-75, 350, 150, 50, &this->font, "New Game",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+	this->buttons["GAME_STATE"] = new Button((this->window->getSize().x/2.f)-75, 300, 150, 50,
+		&this->font, "New Game",50,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["SETTINGS"] = new Button((this->window->getSize().x / 2.f) - 75, 500, 150, 50, &this->font, "Settings",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+	this->buttons["SETTINGS"] = new Button((this->window->getSize().x / 2.f) - 75, 450, 150, 50,
+		&this->font, "Settings",50,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EXIT_STATE"] = new Button((this->window->getSize().x / 2.f) - 75, 650, 150, 50, &this->font, "Quit",
-		sf::Color(100, 100, 100, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+	this->buttons["EDITOR_STATE"] = new Button((this->window->getSize().x / 2.f) - 75, 600, 150, 50, 
+		&this->font, "Editor",50,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["EXIT_STATE"] = new Button((this->window->getSize().x / 2.f) - 75, 800, 150, 50,
+		&this->font, "Quit",50,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
 
@@ -152,15 +163,15 @@ void MainMenuState::render(sf::RenderTarget* target)
 	
 	this->renderButtons(target);
 
-	//sf::Text mouseText;
-	//mouseText.setPosition(this->mousePosView.x,this->mousePosView.y - 50);
-	//mouseText.setFont(this->font);
-	//mouseText.setCharacterSize(12);
-	//std::stringstream ss;
-	//ss << this->mousePosView.x << " " << this->mousePosView.y;
-	//mouseText.setString(ss.str());
+	/*sf::Text mouseText;
+	mouseText.setPosition(this->mousePosView.x,this->mousePosView.y - 50);
+	mouseText.setFont(this->font);
+	mouseText.setCharacterSize(12);
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y;
+	mouseText.setString(ss.str());
 
-	//target->draw(mouseText);
+	target->draw(mouseText);*/
 
 	
 }

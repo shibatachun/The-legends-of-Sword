@@ -19,6 +19,9 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{513d2247-379f-46ff-a3e5-c3f8ae20c284}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{0ff47a7e-c4d9-4c86-aee5-63de64f71f71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,56 +92,15 @@
     <ClInclude Include="Player.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="image1.bin">
-      <Filter>资源文件</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Orc\Orc\Orc.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Attack01.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Attack02.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Attack03.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Death.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Hurt.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Idle.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\Tiny RPG Character Asset Pack v1.03 -Free Soldier&amp;Orc\Characters(100x100)\Soldier\Soldier with shadows\Soldier-Walk.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\MasterSimple.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\test.jpg">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\galletcity.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\galletcity_tiles.png">
-      <Filter>资源文件</Filter>
-    </Image>
     <Image Include="..\Artistinfo2.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\PathAndObjects.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
