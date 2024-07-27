@@ -58,6 +58,12 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,6 +102,12 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="AnimationComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorState.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

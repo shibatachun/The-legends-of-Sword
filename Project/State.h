@@ -3,6 +3,7 @@
 
 #include "Player.h"
 
+#include "Button.h"
 
 #include "Map.h"
 #include "Character.h"

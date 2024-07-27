@@ -3,6 +3,7 @@
 
 
 #include "GameState.h"
+#include "EditorState.h"
 #include "Button.h"
 class MainMenuState :
     public State
@@ -32,7 +33,7 @@ public:
     void updateButtons();
     void update(const float& dt);
     //Render
-    void renderButtons(sf::RenderTarget* target = NULL);
+    void renderButtons(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = NULL);
 };
 

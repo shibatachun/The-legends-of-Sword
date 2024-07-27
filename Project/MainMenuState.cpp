@@ -96,6 +96,8 @@ void MainMenuState::initButtons()
 		&this->font, "Quit",50,
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	
 }
 
 
@@ -121,6 +123,13 @@ void MainMenuState::updateButtons()
 	{
 		this->states->push(new GameState(this->window, this->supportKeys,this->states));
 	}
+	//Settings
+	
+	//Editor
+	if (this->buttons["EDITOR_STATE"]->isPressed())
+	{
+		this->states->push(new EditorState(this->window, this->supportKeys, this->states));
+	}
 	//Quit the game
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
@@ -143,7 +152,7 @@ void MainMenuState::update(const float& dt)
 	
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget* target)
+void MainMenuState::renderButtons(sf::RenderTarget& target)
 {
 	for (auto& it : this->buttons)
 	{
@@ -161,7 +170,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 	
-	this->renderButtons(target);
+	this->renderButtons(*target);
 
 	/*sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x,this->mousePosView.y - 50);

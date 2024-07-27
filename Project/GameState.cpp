@@ -22,7 +22,7 @@ void GameState::initKeybinds()
 void GameState::initTextures()
 {
 	
-	if (!this->textures["PLAYER_IDLE"].loadFromFile("Resources/images/Sprites/Player/test.png"))
+	if (!this->textures["PLAYER"].loadFromFile("Resources/images/Sprites/Player/soldier_all_sheet.png"))
 	{
 		throw "ERROR::GAME_STATE::FAILD_TO_LOAD_PLAYER_TEXTURE";
 	}
@@ -31,7 +31,7 @@ void GameState::initTextures()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
+	this->player = new Player(0, 0, this->textures["PLAYER"]);
 
 }
 
@@ -82,6 +82,6 @@ void GameState::render(sf::RenderTarget* target )
 		target = this->window;
 		
 	}
-	this->player->render(target);
+	this->player->render(*target);
 	
 }
