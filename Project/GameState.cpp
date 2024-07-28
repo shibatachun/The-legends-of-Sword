@@ -27,6 +27,7 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::FAILD_TO_LOAD_PLAYER_TEXTURE";
 	}
 	
+	
 }
 
 void GameState::initPlayers()

@@ -40,7 +40,9 @@ public:
 
 
 	//Accessors
+	const float& getMaxVelocity() const;
 	const sf::Vector2f& getVelocity() const;
+
 
 
 	//Functions

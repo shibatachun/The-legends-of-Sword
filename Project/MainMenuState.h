@@ -15,6 +15,7 @@ private:
     sf::Font  font;
 
     std::map<std::string, Button*> buttons;
+    std::map<std::string, sf::Music> bgm;
 
     //Functions
     void initVariables();

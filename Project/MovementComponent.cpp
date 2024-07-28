@@ -11,6 +11,11 @@ MovementComponent::~MovementComponent()
 {
 }
 
+const float& MovementComponent::getMaxVelocity() const
+{
+	return this->maxVelocity;
+}
+
 const sf::Vector2f& MovementComponent::getVelocity() const
 {
 	return this->velocity;
@@ -29,11 +34,11 @@ const bool MovementComponent::getState(const short unsigned state) const
 			return true;
 		break;
 	case MOVEING_LEFT:
-		if (this->velocity.x > 0.f)
+		if (this->velocity.x < 0.f)
 			return true;
 		break;
 	case MOVING_RIGHT:
-		if (this->velocity.x < 0.f)
+		if (this->velocity.x > 0.f)
 			return true;
 		break;
 	case MOVING_UP:
