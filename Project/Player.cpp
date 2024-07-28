@@ -3,6 +3,7 @@
 void Player::initVariables()
 {
 	this->maxVelocity = 0;
+	this->attacking = false;
 }
 
 void Player::initComponents()
@@ -18,8 +19,8 @@ Player::Player(float x, float y,sf::Texture& texture_sheet)
 	
 	this->setPosstion(x, y);
 	
-	this->createHitboxComponent(0.f, 0.f,48.f,48.f);
-	this->createMovementComponent(250.f, 10.f, 4.f);
+	this->createHitboxComponent(120.f, 120.f,48.f,48.f);
+	this->createMovementComponent(300.f, 10.f, 4.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->animationComponent->addAnimation("IDLE", 7.f,0,0,6,0,300,300);
@@ -38,11 +39,34 @@ Player::Player(float x, float y,sf::Texture& texture_sheet)
 Player::~Player()
 {
 }
-//Functions
-void Player::update(const float& dt)
+void Player::updataAttack()
 {
-	this->movementComponent->update(dt);
-	this->hitboxComponent->update();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+	{
+		this->attacking = true;
+
+	}
+}
+void Player::updateAnimation(const float& dt)
+{
+
+	if (this->attacking)
+	{
+		//Set origin depending on direction
+		if (this->sprite.getScale().x > 0.f)
+		{
+			this->sprite.setOrigin(0.f, 0.f);
+		}
+		else //Facing right
+		{
+			this->sprite.setOrigin(300.f, 0.f);
+		}
+		//Animate and check for animation end
+		if (this->animationComponent->play("ATTACK", dt, true))
+		{
+			this->attacking = false;
+		}		
+	}
 
 	if (this->movementComponent->getState(IDLE))
 		this->animationComponent->play("IDLE", dt);
@@ -55,9 +79,13 @@ void Player::update(const float& dt)
 	}	
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
-		this->sprite.setOrigin(0.f, 0.f);
-		this->sprite.setScale(1.f, 1.f);
+		if (this->sprite.getScale().x < 0.f)
+		{
+			this->sprite.setOrigin(0.f, 0.f);
+			this->sprite.setScale(1.f, 1.f);
+		}
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
+		
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
@@ -67,6 +95,16 @@ void Player::update(const float& dt)
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
+}
+//Functions
+void Player::update(const float& dt)
+{
+	this->movementComponent->update(dt);
+	this->updataAttack();
+
+	this->hitboxComponent->update();
+	this->updateAnimation(dt);
+	
 		
 		
 

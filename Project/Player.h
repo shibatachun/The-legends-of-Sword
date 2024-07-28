@@ -8,6 +8,7 @@ class Player :
 private:
     //Variables
     float maxVelocity;
+    bool attacking;
     MovementComponent* movement;
     //Initializer functions
     void initVariables();
@@ -17,6 +18,10 @@ public:
     virtual ~Player();
 
     //Functions
+    
+
+    void updataAttack();
+    void updateAnimation(const float& dt);
     virtual void update(const float& dt);
 
 };

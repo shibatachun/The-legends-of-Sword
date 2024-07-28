@@ -12,7 +12,7 @@ private:
     //Variables
     sf::Texture background_texture;
     sf::RectangleShape background;
-    sf::Font  font;
+ 
 
     std::map<std::string, Button*> buttons;
     std::map<std::string, sf::Music> bgm;

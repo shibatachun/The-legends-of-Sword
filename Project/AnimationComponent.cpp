@@ -1,9 +1,9 @@
 #include "AnimationComponent.h"
 
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet)
-	:sprite(sprite), textureSheet(texture_sheet), lastAnimation(NULL),priorityAnimation(NULL)
+	:sprite(sprite), textureSheet(texture_sheet), lastAnimation(NULL), priorityAnimation(NULL)
 {
-	
+
 }
 
 AnimationComponent::~AnimationComponent()
@@ -13,6 +13,12 @@ AnimationComponent::~AnimationComponent()
 		delete i.second;
 	}
 }
+
+ bool& AnimationComponent::isDone(const std::string key) 
+{
+	 return this->animations[key]->isDone();
+}
+
 
 
 
@@ -24,8 +30,10 @@ void AnimationComponent::addAnimation(const std::string key
 		, animation_timer, start_frame_x, start_frame_y, frames_x, frames_y, width, height);
 }
 
-void AnimationComponent::play(const std::string key, const float& dt, const bool priority )
+bool AnimationComponent::play(const std::string key, const float& dt, const bool priority )
 {
+	
+	
 	if (this->priorityAnimation)
 	{
 		if (this->priorityAnimation == this->animations[key])
@@ -42,8 +50,9 @@ void AnimationComponent::play(const std::string key, const float& dt, const bool
 
 			}
 			//if the priority animation is done, remove it.
-			if (this->animations[key]->play(dt))
+			if(this->animations[key]->play(dt))
 			{
+			
 				this->priorityAnimation = NULL;
 			}
 
@@ -51,6 +60,11 @@ void AnimationComponent::play(const std::string key, const float& dt, const bool
 	}
 	else
 	{
+		if (priority)
+		{
+			this->priorityAnimation = animations[key];
+		}
+
 		if (this->lastAnimation != this->animations[key])
 		{
 			if (this->lastAnimation == NULL)
@@ -67,7 +81,7 @@ void AnimationComponent::play(const std::string key, const float& dt, const bool
 			this->priorityAnimation = NULL;
 		}
 	}
-		
+	return this->isDone(key);
 
 }
 
@@ -90,6 +104,7 @@ void AnimationComponent::play(const std::string key, const float& dt, const floa
 			}
 			if (this->animations[key]->play(dt, abs(modifier / modifier_max)))
 			{
+				
 				this->priorityAnimation = NULL;
 			}
 
@@ -97,6 +112,10 @@ void AnimationComponent::play(const std::string key, const float& dt, const floa
 	}
 	else
 	{
+		if (priority)
+		{
+			this->priorityAnimation = animations[key];
+		}
 		if (this->lastAnimation != this->animations[key])
 		{
 			if (this->lastAnimation == NULL)

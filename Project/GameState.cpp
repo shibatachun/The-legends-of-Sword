@@ -30,6 +30,11 @@ void GameState::initTextures()
 	
 }
 
+void GameState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window,this->font);
+}
+
 void GameState::initPlayers()
 {
 	this->player = new Player(0, 0, this->textures["PLAYER"]);
@@ -37,17 +42,27 @@ void GameState::initPlayers()
 }
 
 
-
+void GameState::initFonts()
+{
+	if (!this->font.loadFromFile("Fonts\\ThaleahFat.ttf"))
+	{
+		throw("ERROR::GAMESTATE::COULD NOT LOAD FONT");
+	}
+}
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
 	:State(window,supportedKeys,states)
 {
 	this->initKeybinds();
+	this->initFonts();
+
 	this->initTextures();
+	this->initPauseMenu();
 	this->initPlayers();
 }
 
 GameState::~GameState()
 {
+	delete this->pmenu;
 	delete this->player;
 }
 
@@ -55,6 +70,23 @@ GameState::~GameState()
 
 
 void GameState::updateInput(const float& dt)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+	{
+		if (!this->paused)
+		{
+			this->pauseState();
+
+		}
+		else
+		{
+			this->unpauseState();
+
+		}
+	}
+}
+
+void GameState::updatePlayerInput(const float& dt)
 {
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
@@ -65,15 +97,26 @@ void GameState::updateInput(const float& dt)
 		this->player->move(0.f, -1.f,dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player->move(0.f, 1.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
+	
 }
 
 void GameState::update(const float& dt)
 {
-	this->updateInput(dt);
-	this->player->update(dt);
 	this->updateMousePositions();
+	this->updateInput(dt);
+	if (!this->paused)
+	{
+		this->updatePlayerInput(dt);
+		this->player->update(dt);
+
+		
+	}
+	else //Pause update
+	{
+
+		this->pmenu->update();
+	}
+	
 }
 
 void GameState::render(sf::RenderTarget* target )
@@ -84,5 +127,9 @@ void GameState::render(sf::RenderTarget* target )
 		
 	}
 	this->player->render(*target);
+	if (this->paused)//Pause 
+	{
+		this->pmenu->render(*target);
+	}
 	
 }
