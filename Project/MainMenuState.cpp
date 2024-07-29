@@ -11,8 +11,6 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
-
-
 	 
 	
 
@@ -31,6 +29,7 @@ MainMenuState::~MainMenuState()
 //Initializer functions
 void MainMenuState::initVariables()
 {
+
 }
 
 void MainMenuState::initBackground()
@@ -75,32 +74,31 @@ void MainMenuState::initKeybinds()
 
 
 }
+
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button((this->window->getSize().x/2.f)-75, 300, 150, 50,
-		&this->font, "New Game",50,
+	this->buttons["GAME_STATE"] = new Button((this->window->getSize().x / 2.f) - 75.f, 300.f, 150.f, 50.f,
+		&this->font, "New Game", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["SETTINGS"] = new Button((this->window->getSize().x / 2.f) - 75, 450, 150, 50,
-		&this->font, "Settings",50,
+	this->buttons["SETTINGS_STATE"] = new Button((this->window->getSize().x / 2.f) - 75.f, 450.f, 150.f, 50.f,
+		&this->font, "Settings", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EDITOR_STATE"] = new Button((this->window->getSize().x / 2.f) - 75, 600, 150, 50, 
-		&this->font, "Editor",50,
+	this->buttons["EDITOR_STATE"] = new Button((this->window->getSize().x / 2.f) - 75.f, 600.f, 150.f, 50.f,
+		&this->font, "Editor", 50,
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EXIT_STATE"] = new Button((this->window->getSize().x / 2.f) - 75, 800, 150, 50,
+	this->buttons["EXIT_STATE"] = new Button((this->window->getSize().x / 2.f) - 75.f, 800.f, 150.f, 50.f,
 		&this->font, "Quit",50,
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	
 }
-
-
 
 void MainMenuState::updateInput(const float& dt)
 {
@@ -118,22 +116,30 @@ void MainMenuState::updateButtons()
 		it.second->update(this->mousePosView);
 
 	}
+
 	//New Game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
-		this->states->push(new GameState(this->window, this->supportKeys,this->states));
+		this->states->push(new GameState(this->window, this->supportKeys, this->states));
 	}
 	//Settings
-	
+	if (this->buttons["SETTINGS_STATE"]->isPressed())
+	{
+		this->states->push(new SettingsState(this->window, this->supportKeys, this->states));
+	}
 	//Editor
 	if (this->buttons["EDITOR_STATE"]->isPressed())
 	{
 		this->states->push(new EditorState(this->window, this->supportKeys, this->states));
 	}
+
 	//Quit the game
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
-		this->endState();
+	
+			this->endState();
+		
+		
 	}
 
 
@@ -142,12 +148,12 @@ void MainMenuState::updateButtons()
 
 void MainMenuState::update(const float& dt)
 {
-	this->updateMousePositions();
-	this->updateInput(dt);
 
 	
+	
+	this->updateMousePositions();
+	this->updateInput(dt);	
 	this->updateButtons();
-
 	
 	
 }

@@ -33,6 +33,7 @@ void GameState::initTextures()
 void GameState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window,this->font);
+	this->pmenu->addButton("QUIT", 200.f, "Quit");
 }
 
 void GameState::initPlayers()
@@ -41,7 +42,6 @@ void GameState::initPlayers()
 
 }
 
-
 void GameState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts\\ThaleahFat.ttf"))
@@ -49,6 +49,7 @@ void GameState::initFonts()
 		throw("ERROR::GAMESTATE::COULD NOT LOAD FONT");
 	}
 }
+
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
 	:State(window,supportedKeys,states)
 {
@@ -66,12 +67,9 @@ GameState::~GameState()
 	delete this->player;
 }
 
-
-
-
 void GameState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
 	{
 		if (!this->paused)
 		{
@@ -100,10 +98,20 @@ void GameState::updatePlayerInput(const float& dt)
 	
 }
 
+void GameState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+	{
+		this->endState();
+	}
+}
+
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
+
 	if (!this->paused)
 	{
 		this->updatePlayerInput(dt);
@@ -114,7 +122,8 @@ void GameState::update(const float& dt)
 	else //Pause update
 	{
 
-		this->pmenu->update();
+		this->pmenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
 	}
 	
 }

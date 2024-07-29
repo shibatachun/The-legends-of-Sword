@@ -147,6 +147,7 @@
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SoundComponent.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Tile.h" />

@@ -146,6 +146,7 @@ void Game::update()
 	
 
 }
+
 void Game::run() {
 	while (this->mWindow->isOpen()) {
 
@@ -155,6 +156,7 @@ void Game::run() {
 
 	}
 }
+
 void Game::render() {
 	this->mWindow->clear();
 	if (!this->states.empty())
