@@ -3,6 +3,8 @@
 #include "State.h"
 
 
+
+
 class SettingsState :
     public State
 {
@@ -16,6 +18,15 @@ private:
     std::map<std::string, gui::DropDownList*> dropDownList;
     std::map<std::string, sf::Music> bgm;
 
+    sf::Text optionsText;
+
+    std::vector<sf::VideoMode> modes;
+
+
+    float dropDownListWidth;
+    float dropDownListHeight;
+    float buttonWidth;
+    float buttonHeight;
 
     
     //Functions
@@ -25,6 +36,7 @@ private:
     void initFonts();
     void initKeybinds();
     void initGui();
+    void initText();
 
     
 public:
