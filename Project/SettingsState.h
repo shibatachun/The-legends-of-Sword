@@ -3,7 +3,6 @@
 #include "State.h"
 
 
-#include "Button.h"
 class SettingsState :
     public State
 {
@@ -13,16 +12,19 @@ private:
     sf::RectangleShape background;
     sf::Font font;
 
-    std::map<std::string, Button*> buttons;
+    std::map<std::string, gui::Button*> buttons;
+    std::map<std::string, gui::DropDownList*> dropDownList;
     std::map<std::string, sf::Music> bgm;
 
+
+    
     //Functions
 
     void initVariables();
     void initBackground();
     void initFonts();
     void initKeybinds();
-    void initButtons();
+    void initGui();
 
     
 public:
@@ -36,10 +38,10 @@ public:
 
 
     void updateInput(const float& dt);
-    void updateButtons();
+    void updateGui(const float& dt);
     void update(const float& dt);
     //Render
-    void renderButtons(sf::RenderTarget& target);
+    void renderGui(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = NULL);
 };
 

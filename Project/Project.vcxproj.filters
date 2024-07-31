@@ -54,7 +54,7 @@
     <ClCompile Include="MainMenuState.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="Gui.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -82,7 +82,7 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="SettingsState.cpp">
-      <Filter>源文件</Filter>
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +110,7 @@
     <ClInclude Include="MainMenuState.h">
       <Filter>States</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="Gui.h">
       <Filter>资源文件</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -138,7 +138,7 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="SettingsState.h">
-      <Filter>头文件</Filter>
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

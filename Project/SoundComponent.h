@@ -1,7 +1,7 @@
 #ifndef SOUNDCOMPONENT_H
 #define SOUNDCOMPONENT_H
 
-#include "Button.h";
+
 #include<vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

@@ -5,7 +5,7 @@
 #include "GameState.h"
 #include "EditorState.h"
 #include "SettingsState.h"
-#include "Button.h"
+#include "State.h"
 class MainMenuState :
     public State
 {
@@ -15,7 +15,7 @@ private:
     sf::RectangleShape background;
     sf::Font font;
 
-    std::map<std::string, Button*> buttons;
+    std::map<std::string, gui::Button*> buttons;
     std::map<std::string, sf::Music> bgm;
 
     //Functions
