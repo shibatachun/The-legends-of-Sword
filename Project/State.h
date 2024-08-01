@@ -2,7 +2,7 @@
 #define STATE_H
 
 #include "Player.h"
-
+#include "GraphicsSettings.h"
 #include "Gui.h"
 
 class State
@@ -11,6 +11,7 @@ private:
 
 protected:
 	std::stack<State*>* states;
+	
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportKeys;
 	std::map<std::string, int> keybinds;

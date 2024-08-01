@@ -87,6 +87,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -141,6 +144,9 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsSettings.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
