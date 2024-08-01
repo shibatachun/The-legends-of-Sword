@@ -1,21 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include<vector>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-#include <ctime>
-#include <cstdlib>
-
-#include <vector>
 
 enum buuton_states{BTN_IDLE = 0,BTN_HOVER, BTN_ACTIVE };
 namespace gui{
@@ -58,6 +44,7 @@ namespace gui{
 		//Modifiers
 		void setText(const std::string text);
 		void setTextPosition(const float x, const float y);
+		void setButtonPosition(const float x, const float y);
 
 		void setId(const short unsigned id);
 		//Functions
@@ -80,11 +67,17 @@ namespace gui{
 	public:
 		DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[],  unsigned numOfElements, unsigned defalut_index = 0);
 		~DropDownList();
+
+		//Accessors
+		const unsigned short& getActiveElementId() const;
+		//Modifiers
+		
 		//Functions
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2f& mousePos,const float& dt);
 		void render(sf::RenderTarget& target);
+		void reRender(float x, float y, float width, float height);
 	};
 }
 

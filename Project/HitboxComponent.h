@@ -2,15 +2,7 @@
 #define HITBOXCOMPONENT_H
 
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
 
 class HitboxComponent
 {

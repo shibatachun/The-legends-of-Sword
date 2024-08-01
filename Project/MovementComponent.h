@@ -1,21 +1,7 @@
 #ifndef MOVEMENTCOMPONENT_H
 #define MOVEMENTCOMPONENT_H
 
-#include<vector>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <ctime>
-#include <cstdlib>
-#include <map>
-#include <vector>
 
 enum movement_states {IDLE=0,MOVING, MOVEING_LEFT, MOVING_RIGHT,MOVING_UP,MOVING_DOWN};
 class MovementComponent

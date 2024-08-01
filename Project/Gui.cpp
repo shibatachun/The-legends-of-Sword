@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Gui.h"
 
 
@@ -77,6 +78,10 @@ const short unsigned& gui::Button::getId() const
 void gui::Button::setTextPosition(const float x, const float y)
 {
 	this->text.setPosition(x,y);
+}
+void gui::Button::setButtonPosition(const float x, const float y)
+{
+	this->shape.setPosition(x, y);
 }
 void gui::Button::setId(const short unsigned id)
 {
@@ -175,6 +180,11 @@ gui::DropDownList::~DropDownList()
 	}
 }
 
+const unsigned short& gui::DropDownList::getActiveElementId() const
+{
+	return this->activeElement->getId();
+}
+
 //Accessors
 const bool gui::DropDownList::getKeytime()
 {
@@ -224,6 +234,15 @@ void gui::DropDownList::update(const sf::Vector2f& mousePos,const float& dt)
 
 	}
 
+}
+
+void gui::DropDownList::reRender(float x, float y, float width, float height)
+{
+	for (auto& i : this->list)
+	{
+		i->setButtonPosition(x, y);
+	}
+	
 }
 
 void gui::DropDownList::render(sf::RenderTarget& target)

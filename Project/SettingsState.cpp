@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SettingsState.h"
 
 SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
@@ -34,6 +35,13 @@ void SettingsState::initVariables()
 {
 	this->dropDownListWidth = (this->window->getSize().x) / 8.f;
 	this->dropDownListHeight = (this->window->getSize().y) / 18.f;
+	this->dropDownListPosition.x = (this->window->getSize().x / 2.f) - (dropDownListWidth / 2.f);
+	this->dropDownListPosition.y = (this->window->getSize().y / 2.f) - (dropDownListHeight / 2.f);
+
+	std::cout <<"DropDownList Width: " << this->dropDownListWidth << '\n';
+		std::cout<<"DropDownList Height" << this->dropDownListHeight << '\n';
+		std::cout <<"DropDownList Position x" << this->dropDownListPosition.x << '\n';
+		std::cout <<"DropDownList Position y" << this->dropDownListPosition.y << '\n';
 	this->modes = sf::VideoMode::getFullscreenModes();
 	
 
@@ -100,7 +108,7 @@ void SettingsState::initGui()
 	{
 		modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
 	}
-	this->dropDownList["RESOLUTION"] = new gui::DropDownList((this->window->getSize().x / 2.f)-100.f, 450.f, this->dropDownListWidth, this->dropDownListHeight, font, modes_str.data(), modes_str.size());
+	this->dropDownList["RESOLUTION"] = new gui::DropDownList(this->dropDownListPosition.x, this->dropDownListPosition.y, this->dropDownListWidth, this->dropDownListHeight, font, modes_str.data(), modes_str.size());
 
 
 }
@@ -115,6 +123,13 @@ void SettingsState::initText()
 		"Resolution \n\nFullscreen\n\nVsync \n\nAntialiasing \n"
 		);
 	
+}
+void SettingsState::RePosition()
+{
+	for (auto& i : this->dropDownList)
+	{
+		i.second->reRender(this->dropDownListPosition.x, this->dropDownListPosition.y, this->dropDownListWidth, this->dropDownListHeight);
+	}
 }
 //Accessors
 
@@ -144,6 +159,13 @@ void SettingsState::updateGui(const float& dt)
 
 	if (this->buttons["SAVE_STATE"]->isPressed())
 	{
+		//Remove later
+		this->window->create(this->modes[this->dropDownList["RESOLUTION"]->getActiveElementId()], "test", sf::Style::Default);
+		//this->initVariables();
+		//this->RePosition();
+
+		
+		
 		
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
@@ -164,10 +186,8 @@ void SettingsState::update(const float& dt)
 
 	this->updateGui(dt);
 
-
-
-
 }
+
 
 void SettingsState::renderGui(sf::RenderTarget& target)
 {
@@ -193,6 +213,7 @@ void SettingsState::render(sf::RenderTarget* target)
 	target->draw(this->background);
 
 	this->renderGui(*target);
+	
 	target->draw(this->optionsText);
 	/*sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x,this->mousePosView.y - 50);
@@ -206,3 +227,4 @@ void SettingsState::render(sf::RenderTarget* target)
 
 
 }
+

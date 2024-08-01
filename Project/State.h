@@ -5,8 +5,6 @@
 
 #include "Gui.h"
 
-#include "Map.h"
-#include "Character.h"
 class State
 {
 private:
@@ -26,8 +24,7 @@ protected:
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
-	//Resources
-	std::map<std::string,sf::Texture> textures;
+
 
 	//Functions
 	virtual void initKeybinds() = 0;

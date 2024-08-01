@@ -28,6 +28,9 @@ private:
     float buttonWidth;
     float buttonHeight;
 
+    sf::Vector2f dropDownListPosition;
+    
+
     
     //Functions
 
@@ -38,6 +41,7 @@ private:
     void initGui();
     void initText();
 
+    void RePosition();
     
 public:
     SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
@@ -52,9 +56,11 @@ public:
     void updateInput(const float& dt);
     void updateGui(const float& dt);
     void update(const float& dt);
+    
     //Render
     void renderGui(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = NULL);
+    void reRender(sf::RenderTarget& target);
 };
 
 #endif

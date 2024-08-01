@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+#include "stdafx.h"
 #include "Game.h"
 
 int main()
