@@ -7,7 +7,9 @@
 
 Game::Game()
 {
+	
 	this->initVariables();
+	this->initGraphicsSettings();
 	this->initWindow();
 	this->initKeys();
 	this->initStates();
@@ -27,52 +29,29 @@ Game::~Game() {
 void Game::initVariables()
 {
 	this->mWindow = NULL;
-	this->fullscreen = false;
+	
 	this->dt = 0.f;
 }
 
 //Initializer functions
 void Game::initWindow()
 {	
-	std::ifstream ifs("Config/window.ini");
-	this->videomodes = sf::VideoMode::getFullscreenModes();
-	std::string title = "None";
-	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
 	
-	bool fullscreen = false;
 
-	unsigned framerate_limit = 120;
-	bool vertical_sync_enabled = false;
-	unsigned antialiasing_level = 0;
-
-	if (ifs.is_open()) {
-		std::getline(ifs, title);
-		ifs >> window_bounds.width >> window_bounds.height;
-		ifs >> fullscreen;
-		ifs >> framerate_limit;
-		ifs >> vertical_sync_enabled;
-		ifs >> antialiasing_level;
-
-	}
-	else
+	if (this->gfxSettings.fullscreen)
 	{
-		std::cerr << "can't open file" << "/n";
-	}
-	ifs.close();
-	this->fullscreen = fullscreen;
-	this->windowSettings.antialiasingLevel = antialiasing_level;
-	if (this->fullscreen)
-	{
-		this->mWindow = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, this->windowSettings);
+		this->mWindow = new sf::RenderWindow(
+			this->gfxSettings.resolution, this->gfxSettings.title,
+			this->gfxSettings.fullscreen, this->gfxSettings.contextSettings);
 	}
 	else
 	{
 
-		this->mWindow = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, this->windowSettings);
+		this->mWindow = new sf::RenderWindow(this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings);
 	}
 
-	this->mWindow->setFramerateLimit(framerate_limit);
-	this->mWindow->setVerticalSyncEnabled(vertical_sync_enabled);
+	this->mWindow->setFramerateLimit(this->gfxSettings.frameRareLimit);
+	this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 
 }
 
@@ -97,6 +76,12 @@ void Game::initKeys()
 	{
 		std::cout << i.first << " " << i.second << "\n";
 	}
+}
+void Game::initGraphicsSettings()
+{
+	this->gfxSettings.loadFromFile("Config/graphics.ini");
+
+
 }
 //Functions
 void Game::initStates()
