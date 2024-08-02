@@ -22,7 +22,7 @@ private:
     void initPlayers();
 
 public:
-    GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+    GameState(StateData *state_data);
     virtual ~GameState();
 
     //Functions

@@ -3,6 +3,7 @@
 
 
 #include "MainMenuState.h"
+#include "State.h"
 
 class Game {
 public:
@@ -29,6 +30,7 @@ private:
 	
 	//Variables
 	GraphicsSettings gfxSettings;
+	StateData stateData;
 	sf::RenderWindow* mWindow;
 	sf::Event sfEvent;
 
@@ -37,7 +39,7 @@ private:
 	//Map mMap;
 	//Character mPlayer;
 	float dt;
-
+	float gridSize;
 	std::stack<State*> states;
 	std::map<std::string, int> supportedKeys;
 
@@ -48,6 +50,7 @@ private:
 	void initWindow();
 	void initKeys();
 	void initGraphicsSettings();
+	void initStateData();
 	void initStates();
 
 	

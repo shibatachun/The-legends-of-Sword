@@ -12,6 +12,7 @@ Game::Game()
 	this->initGraphicsSettings();
 	this->initWindow();
 	this->initKeys();
+	this->initStateData();
 	this->initStates();
 	
 }
@@ -29,8 +30,9 @@ Game::~Game() {
 void Game::initVariables()
 {
 	this->mWindow = NULL;
-	
+
 	this->dt = 0.f;
+	this->gridSize = 50.f;
 }
 
 //Initializer functions
@@ -77,25 +79,36 @@ void Game::initKeys()
 		std::cout << i.first << " " << i.second << "\n";
 	}
 }
+
 void Game::initGraphicsSettings()
 {
 	this->gfxSettings.loadFromFile("Config/graphics.ini");
 
 
 }
-//Functions
+
+void Game::initStateData()
+{
+	
+	this->stateData.window = this->mWindow;
+	this->stateData.gfxSettings = &this->gfxSettings;
+	this->stateData.supportedKeys = &this->supportedKeys;
+	this->stateData.states = &this->states;
+	this->stateData.gridSize = this->gridSize;
+}
+
 void Game::initStates()
 {
-	this->states.push(new MainMenuState(this->mWindow,this->gfxSettings, &this->supportedKeys,&this->states));
+	this->states.push(new MainMenuState(&this->stateData));
 	
 }
 
+//Functions
 void Game::endApplication()
 {
 	std::cout << "Ending Application" << "\n";
 }
 
-//Function
 void Game::processEvents() {
 	
 	while (this->mWindow->pollEvent(this->sfEvent))

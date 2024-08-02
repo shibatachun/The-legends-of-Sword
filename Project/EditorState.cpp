@@ -1,25 +1,17 @@
 #include "stdafx.h"
 #include "EditorState.h"
 
-
-
-
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+EditorState::EditorState(StateData *state_data)
+	:State(state_data)
 {
 	this->initVariables();
-
-
+	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
+	this->initPauseMenu();
 	this->initButtons();
 
-
-
-
-
 }
-
 
 EditorState::~EditorState()
 {
@@ -28,6 +20,7 @@ EditorState::~EditorState()
 	{
 		delete it->second;
 	}
+	delete this->pmenu;
 }
 
 //Initializer functions
@@ -38,8 +31,6 @@ void EditorState::initVariables()
 void EditorState::initBackground()
 {
 }
-
-
 
 void EditorState::initFonts()
 {
@@ -67,6 +58,7 @@ void EditorState::initKeybinds()
 
 
 }
+
 void EditorState::initButtons()
 {
 
@@ -74,14 +66,29 @@ void EditorState::initButtons()
 
 }
 
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+	this->pmenu->addButton("QUIT", 500.f, "Quit");
+}
 
 
+//Functions
 void EditorState::updateInput(const float& dt)
 {
-
-	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
+	
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
+	{
+		if (!this->paused)
+		{
+			this->pauseState();
+		}
+		else
+		{
+			this->unpauseState(); 
+		}
+	}
 
 
 }
@@ -100,13 +107,30 @@ void EditorState::updateButtons()
 
 }
 
+void EditorState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+	{
+		this->endState();
+	}
+}
+
 void EditorState::update(const float& dt)
 {
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
 
-
-	this->updateButtons();
+	if (!this->paused)
+	{
+		this->updateButtons();
+	}
+	else
+	{
+		this->pmenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
+	
 
 
 
@@ -130,7 +154,11 @@ void EditorState::render(sf::RenderTarget* target)
 
 
 	this->renderButtons(*target);
-
+	this->map.render(*target);
+	if (this->paused)
+	{
+		this->pmenu->render(*target);
+	}
 	/*sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x,this->mousePosView.y - 50);
 	mouseText.setFont(this->font);

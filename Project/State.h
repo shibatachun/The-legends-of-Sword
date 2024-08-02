@@ -4,14 +4,30 @@
 #include "Player.h"
 #include "GraphicsSettings.h"
 #include "Gui.h"
+class Player;
+class GraphicsSettings;
+class State;
+class StateData
+{
+public:
+	StateData() {};
+	//Variables
+	float gridSize;
+	sf::RenderWindow* window;
+	GraphicsSettings* gfxSettings;
+	std::map<std::string, int>* supportedKeys;
+	std::stack<State*>* states;
+
+};
+
 
 class State
 {
 private:
 
 protected:
+	StateData* stateData;
 	std::stack<State*>* states;
-	
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportKeys;
 	std::map<std::string, int> keybinds;
@@ -21,6 +37,7 @@ protected:
 	bool paused;
 	float keytime;
 	float keytimeMax;
+	float gridSize;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
@@ -33,7 +50,7 @@ protected:
 	
 
 public:
-	State(sf::RenderWindow* window,std::map<std::string,int>* supportedKeys, std::stack<State*>* states);
+	State(StateData* state_date);
 	virtual ~State();
 
 	
