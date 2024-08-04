@@ -13,13 +13,14 @@ private:
     sf::Font font;
     //Resources
     std::map<std::string, sf::Texture> textures;
-    TileMap map;
+    TileMap* tileMap;
     //Functions
     void initKeybinds();
     void initFonts();
     void initTextures();
     void initPauseMenu();
     void initPlayers();
+    void initTileMap();
 
 public:
     GameState(StateData *state_data);

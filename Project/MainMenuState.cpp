@@ -1,15 +1,12 @@
 #include "stdafx.h"
 #include "MainMenuState.h"
 
-
-
 MainMenuState::MainMenuState(StateData* state_data)
 	:State(state_data)
 {
 	
 	this->initVariables();
 	this->initBackground();
-
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
@@ -17,7 +14,6 @@ MainMenuState::MainMenuState(StateData* state_data)
 	
 
 }
-
 
 MainMenuState::~MainMenuState()
 {

@@ -10,7 +10,7 @@ State::State(StateData* state_data)
 	this->quit = false;
 	this->paused = false;
 	this->keytime = 0.f;
-	this->keytimeMax = 10.f;
+	this->keytimeMax = 1.f;
 	this->gridSize = state_data->gridSize;
 	
 }
@@ -57,6 +57,9 @@ void State::updateMousePositions()
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
+	this->mousePosGrid = sf::Vector2u(
+		static_cast<unsigned>(this->mousePosView.x) / static_cast<unsigned>(this->gridSize),
+		static_cast<unsigned>(this->mousePosView.y) / static_cast<unsigned>(this->gridSize));
 }
 
 void State::updateKeytime(const float& dt)

@@ -43,6 +43,11 @@ void GameState::initPlayers()
 
 }
 
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 void GameState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts\\ThaleahFat.ttf"))
@@ -60,12 +65,14 @@ GameState::GameState(StateData* state_data)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initTileMap();
 }
 
 GameState::~GameState()
 {
 	delete this->pmenu;
 	delete this->player;
+	delete this->tileMap;
 }
 
 void GameState::updateInput(const float& dt)

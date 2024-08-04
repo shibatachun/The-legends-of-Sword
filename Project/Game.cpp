@@ -1,10 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 
-
-
 //Constructor
-
 Game::Game()
 {
 	
@@ -32,7 +29,7 @@ void Game::initVariables()
 	this->mWindow = NULL;
 
 	this->dt = 0.f;
-	this->gridSize = 50.f;
+	this->gridSize = 100.f;
 }
 
 //Initializer functions

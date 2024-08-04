@@ -10,6 +10,8 @@ EditorState::EditorState(StateData *state_data)
 	this->initKeybinds();
 	this->initPauseMenu();
 	this->initButtons();
+	this->initGui();
+	this->initTileMap();
 
 }
 
@@ -21,11 +23,14 @@ EditorState::~EditorState()
 		delete it->second;
 	}
 	delete this->pmenu;
+	delete this->tileMap;
 }
 
 //Initializer functions
 void EditorState::initVariables()
 {
+	this->textureRect= sf::IntRect(0,0,static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+
 }
 
 void EditorState::initBackground()
@@ -72,6 +77,19 @@ void EditorState::initPauseMenu()
 	this->pmenu->addButton("QUIT", 500.f, "Quit");
 }
 
+void EditorState::initGui()
+{
+	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize,this->stateData->gridSize));
+	this->selectorRect.setFillColor(sf::Color::Transparent);
+	this->selectorRect.setOutlineThickness(1.f);
+	this->selectorRect.setOutlineColor(sf::Color::Green);
+}
+
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 
 //Functions
 void EditorState::updateInput(const float& dt)
@@ -93,6 +111,28 @@ void EditorState::updateInput(const float& dt)
 
 }
 
+void EditorState::updateEditorInput(const float& dt)
+{
+	//Add a tile to the tilemap
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&& this->getKeytime())
+	{
+		this->tileMap->addtile(this->mousePosGrid.x,this->mousePosGrid.y,0,this->textureRect);
+	}
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
+	{
+		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+	} 
+
+	//change texture
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)&& this->getKeytime())
+	{
+		if (this->textureRect.left < 128)
+		{
+			this->textureRect.left += 128;
+		}
+	}
+}
+
 void EditorState::updateButtons()
 {
 	/*Update all the buttons in the state and handles their functionality */
@@ -104,6 +144,12 @@ void EditorState::updateButtons()
 	
 	
 
+
+}
+
+void EditorState::updateGui()
+{
+	this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize,this->mousePosGrid.y * this->stateData->gridSize);
 
 }
 
@@ -123,7 +169,10 @@ void EditorState::update(const float& dt)
 
 	if (!this->paused)
 	{
+		
 		this->updateButtons();
+		this->updateGui();
+		this->updateEditorInput(dt);
 	}
 	else
 	{
@@ -144,6 +193,11 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 	}
 }
 
+void EditorState::renderGui(sf::RenderTarget& target)
+{
+	target.draw(this->selectorRect);
+}
+
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
@@ -154,20 +208,21 @@ void EditorState::render(sf::RenderTarget* target)
 
 
 	this->renderButtons(*target);
-	this->map.render(*target);
+	this->renderGui(*target);
+	this->tileMap->render(*target);
 	if (this->paused)
 	{
 		this->pmenu->render(*target);
 	}
-	/*sf::Text mouseText;
+	sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x,this->mousePosView.y - 50);
 	mouseText.setFont(this->font);
 	mouseText.setCharacterSize(12);
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y;
+	ss << this->mousePosView.x << " " << this->mousePosView.y<<"\n"<<this->textureRect.left<<" " <<this->textureRect.top;
 	mouseText.setString(ss.str());
 
-	target->draw(mouseText);*/
+	target->draw(mouseText);
 
 
 }
