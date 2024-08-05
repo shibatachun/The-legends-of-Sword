@@ -79,6 +79,46 @@ namespace gui{
 		void render(sf::RenderTarget& target);
 		void reRender(float x, float y, float width, float height);
 	};
+
+	class TextureSelector
+	{
+	private:
+
+		float gridSize;
+		float positionX;
+		float positionY;
+		bool active;
+		float keytime;
+		float keytimeMax;
+
+		bool hidden;
+	
+		sf::RectangleShape bounds;
+		sf::Sprite sheet;
+		sf::RectangleShape seletor;
+		sf::Vector2u mousePosGrid;
+		sf::IntRect textureRect;
+	
+
+	public:
+		TextureSelector(float x, float y,float width, float height, float gridSize,const sf::Texture* texture_sheet,const sf::Font& font);
+		~TextureSelector();
+		//Accessors
+		const bool& getActive() const;
+		const bool& getHidden() const;
+ 		const sf::IntRect& getTextureRect() const;
+		//Modifiers
+		void setHidden(const bool& hidden);
+		void setActice(const bool& active);
+		void setPosition(const float x, const float y);
+		
+		//Function
+		const bool getKeytime();
+		void updateKeytime(const float& dt);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
+		void render(sf::RenderTarget& target);
+
+	};
 }
 
 

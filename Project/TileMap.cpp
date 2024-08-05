@@ -6,14 +6,14 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 	this->gridSizeF = gridSize;
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
 	this->maxSize.x = width;
-	this->maxSize.y =height;
+	this->maxSize.y = height;
+	this->maxMapSize.x = gridSize * width;
+	this->maxMapSize.y = gridSize * height;
 	this->layers = 1;
 
 	this->maps.resize(this->maxSize.x, std::vector<std::vector<Tile*>>());
 	for (size_t x = 0; x < this->maxSize.x; x++)
 	{
-		
-		
 		
 		for (size_t y = 0; y < this->maxSize.y; y++)
 		{
@@ -28,13 +28,13 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 		}
 	}
 
-	if (!this->tileTextureSheet.loadFromFile("Resources/images/Tiles/TX_Tileset Grass.png"))
+	if (!this->tileSheet.loadFromFile("Resources/images/Tiles/TX_Tileset Grass.png"))
 	{
 		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TILETEXTURESHEET." << "\n";
 	}
 }
 
-//Functions
+
 
 TileMap::~TileMap()
 {
@@ -50,6 +50,17 @@ TileMap::~TileMap()
 	}
 	
 }
+//Accessors
+
+const sf::Texture* TileMap::getTileSheet()
+{
+	return &this->tileSheet;
+}
+const sf::Vector2i TileMap::getMaxMapSize()
+{	
+	return this->maxMapSize;
+}
+//Functions
 void TileMap::update()
 {
 }
@@ -65,7 +76,7 @@ void TileMap::addtile(const unsigned x, const unsigned y, const unsigned z,const
 		if (this->maps[x][y][z] == NULL) 
 		{
 			/*Ok to add tile*/
-			this->maps[x][y][z] = new Tile(x * this->gridSizeF, y * this->gridSizeF, this->gridSizeF,this->tileTextureSheet, texture_rect);
+			this->maps[x][y][z] = new Tile(x * this->gridSizeF, y * this->gridSizeF, this->gridSizeF,this->tileSheet, texture_rect);
 		}
 	}
 }
