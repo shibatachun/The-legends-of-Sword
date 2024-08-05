@@ -182,9 +182,9 @@ void EditorState::updateButtons()
 	}
 }
 
-void EditorState::updateGui()
+void EditorState::updateGui(const float& dt)
 {
-	this->textureSelector->update(this->mousePosWindow);
+	this->textureSelector->update(this->mousePosWindow, dt);
 
 	if (!this->textureSelector->getActive())
 	{
@@ -217,7 +217,7 @@ void EditorState::update(const float& dt)
 	if (!this->paused)
 	{
 		this->updateButtons();
-		this->updateGui();
+		this->updateGui(dt);
 		this->updateEditorInput(dt);
 	}
 	else

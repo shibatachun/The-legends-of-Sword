@@ -46,7 +46,7 @@ public:
     void updateInput(const float& dt);
     void updateEditorInput(const float& dt);
     void updateButtons();
-    void updateGui();
+    void updateGui(const float& dt);
     void updatePauseMenuButtons();
     void update(const float& dt);
     //Render
