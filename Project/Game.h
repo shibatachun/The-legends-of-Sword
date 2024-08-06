@@ -24,6 +24,7 @@ public:
 	void render();
 	//Core
 	void run();
+	
 
 private:
 
@@ -32,8 +33,8 @@ private:
 	GraphicsSettings gfxSettings;
 	StateData stateData;
 	sf::RenderWindow* mWindow;
+	
 	sf::Event sfEvent;
-
 	
 	sf::Clock dtClock;
 	//Map mMap;

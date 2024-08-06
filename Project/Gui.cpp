@@ -28,8 +28,7 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->text.setCharacterSize(character_size);
 	this->text.setPosition(
 		this->shape.getPosition().x+(this->shape.getGlobalBounds().width / 2.f )- this->text.getGlobalBounds().width/2.f,
-		this->shape.getPosition().y +(this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height
-
+		this->shape.getPosition().y 
 	);
 	this->textIdleColor = text_idle_color;
 	this->textHoverColor = text_hover_color;
@@ -42,6 +41,8 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->outlineidleColor = idle_color;
 	this->outlinehoverColor = hover_color;
 	this->outlineactiveColor = active_color;
+
+	this->pressedTimesCount = 0;
 
 
 }
@@ -95,20 +96,31 @@ void gui::Button::setText(const std::string text)
 {
 	this->text.setString(text);
 }
+bool gui::Button::PressedCorrector()
+{
+	int i = 0;
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		i++;
+	}
+	return false;
+}
 //Functions
 void gui::Button::update(const sf::Vector2f& mousePos)
 {
 	 /* Update the booleans for hover and pressed*/
-
+	
 	this->buttonState = BTN_IDLE;
 	//Hover
 	if (this->shape.getGlobalBounds().contains(mousePos))
 	{
-		this->buttonState = BTN_HOVER;
 
+		this->buttonState = BTN_HOVER;
+	
 		//Pressed
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
+			
 			this->buttonState = BTN_ACTIVE;
 		}
 	}
@@ -274,7 +286,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width,
 	this->hidden = false;
 	this->positionX = x;
 	this->positionY = y;
-	float offset = 60.f;
+	float offset = 100.f;
 
 
 	this->bounds.setSize(sf::Vector2f(width, height));

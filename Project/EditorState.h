@@ -22,6 +22,7 @@ private:
     std::map<std::string, gui::Button*> buttons;
 
     TileMap* tileMap;
+    sf::RectangleShape sidebar;
     sf::IntRect textureRect;
     sf::RectangleShape selectorRect;
 

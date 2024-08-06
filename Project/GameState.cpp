@@ -45,7 +45,7 @@ void GameState::initPlayers()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/images/Tiles/TX_Tileset Grass.png");
 }
 
 void GameState::initFonts()

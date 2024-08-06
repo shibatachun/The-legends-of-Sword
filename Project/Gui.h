@@ -10,6 +10,7 @@ namespace gui{
 	private:
 		short unsigned buttonState;
 		short unsigned id;
+		int pressedTimesCount;
 		sf::RectangleShape shape;
 		sf::Font* font;
 		sf::Text text;
@@ -48,8 +49,9 @@ namespace gui{
 
 		void setId(const short unsigned id);
 		//Functions
-			void update(const sf::Vector2f& mousePos);
-			void render(sf::RenderTarget& target);
+		bool PressedCorrector();
+		void update(const sf::Vector2f& mousePos);
+		void render(sf::RenderTarget& target);
 
 	};
 
