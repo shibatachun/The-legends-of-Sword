@@ -27,6 +27,9 @@ private:
     sf::RectangleShape selectorRect;
 
     gui::TextureSelector* textureSelector;
+
+    bool collision;
+    short type;
     //Functions
     void initVariables();
     void initBackground();

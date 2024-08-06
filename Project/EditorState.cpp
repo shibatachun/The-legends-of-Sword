@@ -32,6 +32,8 @@ EditorState::~EditorState()
 void EditorState::initVariables()
 {
 	this->textureRect= sf::IntRect(0,0,static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+	this->collision = false;
+	this->type = TileTypes::DEFAULT;
 
 }
 
@@ -73,7 +75,7 @@ void EditorState::initKeybinds()
 		}
 	}
 	ifs.close();
-
+	
 
 }
 
@@ -147,7 +149,7 @@ void EditorState::updateEditorInput(const float& dt)
 	{
 		if (!this->textureSelector->getActive()&& !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 		{
-			this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+			this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,this->collision,this->type);
 		}
 		else {
 			this->textureRect = this->textureSelector->getTextureRect();
@@ -161,8 +163,23 @@ void EditorState::updateEditorInput(const float& dt)
 		}
 	} 
 
-	//change texture
-
+	//toggle collision
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_COLLISION"))) && this->getKeytime())
+	{
+		if (this->collision)
+			this->collision = false;
+		else
+			this->collision = true;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("INCREASE_TYPE"))) && this->getKeytime())
+	{
+		++this->type;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DECREASE_TYPE"))) && this->getKeytime())
+	{
+		if(this->type>0)
+			--this->type;
+	}
 }
 
 void EditorState::updateButtons()
@@ -202,7 +219,9 @@ void EditorState::updateGui(const float& dt)
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y <<
 		"\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y <<
-		"\n" << this->textureRect.left << " " << this->textureRect.top;
+		"\n" << this->textureRect.left << " " << this->textureRect.top <<
+		"\n" << "Collision: " << this->collision <<
+		"\n" <<"Type: "<< this->type;
 	this->cursorText.setString(ss.str());
 
 }
