@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ #include "stdafx.h"
 #include "TileMap.h"
 
 void TileMap::clear()
@@ -26,8 +26,8 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height,std::string tex
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
 	this->maxSize.x = width;
 	this->maxSize.y = height;
-	this->maxMapSize.x = gridSize * width;
-	this->maxMapSize.y = gridSize * height;
+	this->maxSizeWorldF.x = gridSize * static_cast<float>( width);
+	this->maxSizeWorldF.y = gridSize * static_cast<float>(height);
 	this->layers = 1;
 	this->textureFile = texture_file;
 	this->maps.resize(this->maxSize.x, std::vector<std::vector<Tile*>>());
@@ -52,6 +52,12 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height,std::string tex
 	{
 		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TILETEXTURESHEET." << "\n";
 	}
+
+	this->collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
+	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+	this->collisionBox.setOutlineColor(sf::Color::Red);
+	this->collisionBox.setOutlineThickness(1.f);
+
 }
 
 
@@ -66,9 +72,9 @@ const sf::Texture* TileMap::getTileSheet()
 {
 	return &this->tileSheet;
 }
-const sf::Vector2i TileMap::getMaxMapSize()
+const sf::Vector2f TileMap::getMaxMapSize()
 {	
-	return this->maxMapSize;
+	return this->maxSizeWorldF;
 }
 //Functions
 
@@ -224,10 +230,35 @@ void TileMap::loadFromFile(const std::string file_name)
 }
 
 
+void TileMap::updateCollision(Entity* entity)
+{
+	//World Bounds
+	if (entity->getPosition().x < 0.f)
+	{
+		entity->setPosstion(0.f, entity->getPosition().y);
+
+	}
+	else if (entity->getPosition().x + entity->getGlobalBounds().width >this->maxSizeWorldF.x) {
+
+		entity->setPosstion(this->maxSizeWorldF.x - entity->getGlobalBounds().width,entity->getPosition().y);
+	}
+	
+	if (entity->getPosition().y < 0.f)
+	{
+		entity->setPosstion( entity->getPosition().x, 0.f);
+
+	}
+	else if (entity->getPosition().y + entity->getGlobalBounds().height> this->maxSizeWorldF.y) {
+
+		entity->setPosstion(entity->getPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
+	}
+
+}
+
 void TileMap::update()
 {
 }
-void TileMap::render(sf::RenderTarget& target)
+void TileMap::render(sf::RenderTarget& target, Entity* entity)
 {
 	for (auto& x : this->maps)
 	{
@@ -236,7 +267,15 @@ void TileMap::render(sf::RenderTarget& target)
 			for (auto* z : y)
 			{
 				if (z != NULL)
+				{
 					z->render(target);
+					if (z->getCollision())
+					{
+						this->collisionBox.setPosition(z->getPosition());
+						target.draw(this->collisionBox);
+
+					}
+				}
 			}
 		}
 	}

@@ -23,6 +23,7 @@ public:
     void updataAttack();
     void updateAnimation(const float& dt);
     virtual void update(const float& dt);
+    void render(sf::RenderTarget& target);
 
 };
 

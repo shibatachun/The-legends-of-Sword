@@ -19,9 +19,12 @@ public:
 
 
 	//Functions
+	const sf::Vector2f& getPosition() const;
+	const bool& getCollision() const;
 	const std::string getAsString() const;
-	void render(sf::RenderTarget &target);
+	
 	void update();
+	void render(sf::RenderTarget& target);
 
 };
 

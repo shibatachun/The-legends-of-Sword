@@ -50,7 +50,7 @@ namespace gui{
 		void setId(const short unsigned id);
 		//Functions
 		bool PressedCorrector();
-		void update(const sf::Vector2f& mousePos);
+		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget& target);
 
 	};
@@ -77,7 +77,7 @@ namespace gui{
 		//Functions
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
-		void update(const sf::Vector2f& mousePos,const float& dt);
+		void update(const sf::Vector2i& mousePosWindow,const float& dt);
 		void render(sf::RenderTarget& target);
 		void reRender(float x, float y, float width, float height);
 	};

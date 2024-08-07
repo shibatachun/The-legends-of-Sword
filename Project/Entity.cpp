@@ -49,6 +49,23 @@ void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
 }
 
+const sf::Vector2f& Entity::getPosition() const
+{
+	if (this->hitboxComponent)
+		return this->hitboxComponent->getPosition();
+
+	return this->sprite.getPosition();
+}
+
+const sf::FloatRect Entity::getGlobalBounds() const
+{
+	if (this ->hitboxComponent)
+	{
+		return this->hitboxComponent->getGlobalBounds();
+	}
+	return this->sprite.getGlobalBounds();
+}
+
 
 
 //Functions
@@ -59,10 +76,7 @@ void Entity::move(const float dir_x, const float dir_y, const float dt)
 		this->movementComponent->move(dir_x, dir_y,dt);//Sets velocity
 		
 	}
-	else
-	{
-		std::cout << "No sprite" << "\n";
-	}
+
 	
 
 }
@@ -70,7 +84,11 @@ void Entity::move(const float dir_x, const float dir_y, const float dt)
 void Entity::setPosstion(const float x, const float y)
 {
 
-	
+	if (this->hitboxComponent)
+	{
+		this->hitboxComponent->setPosition(x, y);
+	}
+	else
 		this->sprite.setPosition(x,y);
 	
 
@@ -89,11 +107,5 @@ void Entity::render(sf::RenderTarget& target)
 
 	
 		
-		target.draw(this->sprite);
-	
-		if (this->hitboxComponent)
-		{
-			this->hitboxComponent->render(target);
-		}
 	
 }

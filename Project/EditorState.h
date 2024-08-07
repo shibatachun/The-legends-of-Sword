@@ -15,9 +15,11 @@ class EditorState :
 {
 private:
     //Variables
-   
+    
+    sf::View view;
     sf::Font  font;
     sf::Text cursorText;
+    sf::Vector2f mousePositionOffset;
     PauseMenu* pmenu;
     std::map<std::string, gui::Button*> buttons;
 
@@ -28,10 +30,14 @@ private:
 
     gui::TextureSelector* textureSelector;
 
+    sf::RectangleShape collisionBox;
+
+    float cameraSpeed;
     bool collision;
     short type;
     //Functions
     void initVariables();
+    void initView();
     void initBackground();
     void initFonts();
     void initText();

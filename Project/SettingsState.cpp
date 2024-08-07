@@ -148,7 +148,7 @@ void SettingsState::updateGui(const float& dt)
 	/*Update all the gui elements in the state and handles their functionality */
 	for (auto& it : this->buttons)
 	{
-		it.second->update(this->mousePosView);
+		it.second->update(this->mousePosWindow);
 
 	}
 	//Button functionality
@@ -175,7 +175,7 @@ void SettingsState::updateGui(const float& dt)
 	//Dropdown lists
 	for (auto& it : this->dropDownList)
 	{
-		it.second->update(this->mousePosView,dt);
+		it.second->update(this->mousePosWindow,dt);
 	}
 	//Dropdown lists functionality
 }

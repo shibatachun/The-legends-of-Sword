@@ -111,7 +111,7 @@ void MainMenuState::updateButtons()
 	/*Update all the buttons in the state and handles their functionality */
 	for (auto &it:  this->buttons)
 	{
-		it.second->update(this->mousePosView);
+		it.second->update(this->mousePosWindow);
 
 	}
 
