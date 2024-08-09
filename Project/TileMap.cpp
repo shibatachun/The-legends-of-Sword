@@ -88,6 +88,20 @@ const sf::Vector2f TileMap::getMaxMapSize()
 {	
 	return this->maxSizeWorldF;
 }
+const int TileMap::getLayerSize(const int x, const int y, const int z) const
+{
+	if (x >= 0 && x < this->maps.size())
+	{
+		if (y >= 0 && y < this->maps[x].size())
+		{
+			if (layer >= 0 && layer < this->maps[x][y].size())
+			{
+				return this->maps[x][y][layer].size();
+			}
+		}
+	}
+	return -1;
+}
 //Functions
 
 void TileMap::addtile(const int x, const int y, const int z,const sf::IntRect& texture_rect, const bool& collision, const short& type)
@@ -394,72 +408,80 @@ void TileMap::update()
 {
 }
 
-void TileMap::render(sf::RenderTarget& target, Entity* entity)
+void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
-	if (entity) {
-		this->layer = 0;
-		this->fromX = entity->getGridPosition(this->gridSizeI).x - 4;
-		if (this->fromX < 0)
-		{
-			this->fromX = 0;
-		}
-		else if (this->fromX > this->maxSize.x)
-		{
-			this->fromX = this->maxSize.x;
-		}
-
-		this->toX = entity->getGridPosition(this->gridSizeI).x + 5;
-		if (this->toX < 0)
-		{
-			this->toX = 0;
-		}
-		else if (this->toX > this->maxSize.x)
-		{
-			this->toX = this->maxSize.x;
-		}
-
-		this->fromY = entity->getGridPosition(this->gridSizeI).y - 4;
-		if (this->fromY < 0)
-		{
-			this->fromY = 0;
-		}
-		else if (this->fromY > this->maxSize.y)
-		{
-			this->fromY = this->maxSize.y;
-		}
-
-
-		this->toY = entity->getGridPosition(this->gridSizeI).y + 5;
-
-		if (this->toY < 0)
-		{
-			this->toY = 0;
-		}
-		else if (this->toY > this->maxSize.y)
-		{
-			this->toY = this->maxSize.y;
-		}
-
-		for (int x = fromX; x < this->toX; x++)
-		{
-			for (int y = this->fromY; y < this->toY; y++)
-			{
-					for (size_t k = 0; k < this->maps[x][y][this->layer].size(); k++)
-					{
-
-						this->maps[x][y][this->layer][k]->render(target);
-						if (this->maps[x][y][this->layer][k]->getCollision())
-						{
-							this->collisionBox.setPosition(this->maps[x][y][this->layer][k]->getPosition());
-							target.draw(this->collisionBox);
-
-						}
-					}	
-			}
-
-		}
+	
+	this->layer = 0;
+	this->fromX = gridPosition.x - 4;
+	if (this->fromX < 0)
+	{
+		this->fromX = 0;
 	}
-	else {
+	else if (this->fromX > this->maxSize.x)
+	{
+		this->fromX = this->maxSize.x;
+	}
+
+	this->toX = gridPosition.x + 5;
+	if (this->toX < 0)
+	{
+		this->toX = 0;
+	}
+	else if (this->toX > this->maxSize.x)
+	{
+		this->toX = this->maxSize.x;
+	}
+
+	this->fromY = gridPosition.y - 4;
+	if (this->fromY < 0)
+	{
+		this->fromY = 0;
+	}
+	else if (this->fromY > this->maxSize.y)
+	{
+		this->fromY = this->maxSize.y;
+	}
+
+
+	this->toY = gridPosition.y + 5;
+
+	if (this->toY < 0)
+	{
+		this->toY = 0;
+	}
+	else if (this->toY > this->maxSize.y)
+	{
+		this->toY = this->maxSize.y;
+	}
+
+	for (int x = fromX; x < this->toX; x++)
+	{
+		for (int y = this->fromY; y < this->toY; y++)
+		{
+				for (size_t k = 0; k < this->maps[x][y][this->layer].size(); k++)
+				{
+					if (this->maps[x][y][this->layer][k]->getType() == TileTypes::DOODAD)
+					{
+						this->deferredRenderStack.push(this->maps[x][y][this->layer][k]);
+					}
+					else
+					{
+						this->maps[x][y][this->layer][k]->render(target);
+					}
+
+					if (this->maps[x][y][this->layer][k]->getCollision())
+					{
+						this->collisionBox.setPosition(this->maps[x][y][this->layer][k]->getPosition());
+						target.draw(this->collisionBox);
+
+					}
+				
+				}	
+		}
+
+	}
+	
+	/*else {
 		for (auto& x : this->maps)
 		{
 			for (auto& y : x)
@@ -479,6 +501,15 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
 				}
 			}
 		}
-	}
+	}*/
 
+}
+
+void TileMap::renderDeferred(sf::RenderTarget& target)
+{
+	while (!this->deferredRenderStack.empty())
+	{
+		deferredRenderStack.top()->render(target);
+		deferredRenderStack.pop();
+	}
 }

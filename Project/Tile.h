@@ -2,7 +2,7 @@
 #define TILE_H
 
 
-enum TileTypes {DEFAULT = 0,DAMAGING};
+enum TileTypes {DEFAULT = 0,DAMAGING,DOODAD};
 class Tile
 {
 private:
@@ -16,7 +16,8 @@ public:
 	Tile();
 	Tile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& texture,const sf::IntRect rect, bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
-
+	//Accessors
+	const short& getType() const;
 
 	//Functions
 	const sf::Vector2f& getPosition() const;

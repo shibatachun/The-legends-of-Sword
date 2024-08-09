@@ -25,6 +25,11 @@ Tile::Tile(int x, int y, float gridSizeF, const sf::Texture& texture, const sf::
 Tile::~Tile()
 {
 }
+const short& Tile::getType() const
+{
+	return this->type;
+
+}
 //Accessors
 const sf::Vector2f& Tile::getPosition() const
 {

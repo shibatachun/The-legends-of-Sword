@@ -35,6 +35,7 @@ private:
     float cameraSpeed;
     bool collision;
     short type;
+    int layer;
     //Functions
     void initVariables();
     void initView();
