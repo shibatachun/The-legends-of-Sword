@@ -34,12 +34,16 @@ public:
 
 	//Acceesors
 	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::Vector2u getGridPosition(const unsigned gridSizeU) const;
 	virtual const sf::FloatRect getGlobalBounds() const;
 	//Modifiers
+	virtual void setPosstion(const float x, const float y);
 	
 	//Functions
-	virtual void setPosstion(const float x, const float y);
 	virtual void move( const float x, const float y,const float dt );
+	virtual void stopVelocity();
+	virtual void stopVelocityX();
+	virtual void stopVelocityY();
 	virtual void update(const float& dt) = 0 ;
 	virtual void render(sf::RenderTarget& target) = 0;
 

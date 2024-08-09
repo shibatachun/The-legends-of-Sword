@@ -21,6 +21,13 @@ private:
 	std::string textureFile;
 	sf::Texture tileSheet;
 	sf::RectangleShape collisionBox;
+
+	//Culling
+	int fromX;
+	int toX;
+	int fromY;
+	int toY;
+	int layer;
 protected:
 	
 public:
