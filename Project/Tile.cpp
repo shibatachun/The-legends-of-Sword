@@ -36,6 +36,11 @@ const bool& Tile::getCollision() const
 	return this->collision;
 }
 
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+	return this->shape.getGlobalBounds();
+}
+
 
 
 //Functions

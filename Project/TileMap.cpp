@@ -309,13 +309,38 @@ void TileMap::updateCollision(Entity* entity)
 		this->toY = this->maxSize.y ;
 	}
 	
+	
+	
 	for (size_t x = fromX; x < this->toX; x++)
 	{
+
 		for (size_t y = this->fromY; y < this->toY; y++)
 		{
-			if (this->maps[x][y][this->layer]->getCollision() && this->maps[x][y][this->layer]->intersects(entity->getGlobalBounds()))
+			sf::FloatRect playerBounds = entity->getGlobalBounds();
+			sf::FloatRect wallBounds = this->maps[x][y][this->layer]->getGlobalBounds();
+			sf::FloatRect nextPositionBound = entity->getNextPositionBounds();
+
+			if (this->maps[x][y][this->layer]->getCollision() &&
+				this->maps[x][y][this->layer]->intersects(nextPositionBound))
 			{
-				std::cout << "COLLISION " << "\n";
+				//Bottom collision
+				if (playerBounds.top < wallBounds.top &&
+					playerBounds.top+playerBounds.height < wallBounds.top + wallBounds.height&&
+					playerBounds.left < wallBounds.left + wallBounds.width &&
+					playerBounds.left+playerBounds.width > wallBounds.left)
+				{
+					entity->stopVelocityY();
+					entity->setPosstion(playerBounds.left, wallBounds.top - playerBounds.height);
+				}
+				//Top collision
+				else if (playerBounds.top > wallBounds.top  &&
+					playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height &&
+					playerBounds.left < wallBounds.left + wallBounds.width &&
+					playerBounds.left + playerBounds.width > wallBounds.left)
+				{
+					entity->stopVelocityY();
+					entity->setPosstion(playerBounds.left, wallBounds.top - playerBounds.height);
+				}
 			}
 				
 				
@@ -334,7 +359,7 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
 {
 	if (entity) {
 		this->layer = 0;
-		this->fromX = entity->getGridPosition(this->gridSizeU).x - 1;
+		this->fromX = entity->getGridPosition(this->gridSizeU).x - 5;
 		if (this->fromX < 0)
 		{
 			this->fromX = 0;
@@ -344,7 +369,7 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
 			this->fromX = this->maxSize.x;
 		}
 
-		this->toX = entity->getGridPosition(this->gridSizeU).x + 3;
+		this->toX = entity->getGridPosition(this->gridSizeU).x + 8;
 		if (this->toX < 0)
 		{
 			this->toX = 0;
@@ -354,7 +379,7 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
 			this->toX = this->maxSize.x;
 		}
 
-		this->fromY = entity->getGridPosition(this->gridSizeU).y - 1;
+		this->fromY = entity->getGridPosition(this->gridSizeU).y - 5;
 		if (this->fromY < 0)
 		{
 			this->fromY = 0;
@@ -365,7 +390,7 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
 		}
 
 
-		this->toY = entity->getGridPosition(this->gridSizeU).y + 3;
+		this->toY = entity->getGridPosition(this->gridSizeU).y + 8;
 
 		if (this->toY < 0)
 		{
