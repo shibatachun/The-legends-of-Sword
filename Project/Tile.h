@@ -14,7 +14,7 @@ protected:
 
 public:
 	Tile();
-	Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, const sf::Texture& texture,const sf::IntRect rect, bool collision = false, short type = TileTypes::DEFAULT);
+	Tile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& texture,const sf::IntRect rect, bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
 
 

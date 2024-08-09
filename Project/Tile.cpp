@@ -7,7 +7,7 @@ Tile::Tile()
 	this->type = 0;
 }
 
-Tile::Tile(unsigned x, unsigned y, float gridSizeF, const sf::Texture& texture, const sf::IntRect texture_rect,
+Tile::Tile(int x, int y, float gridSizeF, const sf::Texture& texture, const sf::IntRect texture_rect,
 	bool collision, short type)
 {
 	this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));

@@ -10,12 +10,12 @@ class State;
 class StateData
 {
 public:
-	StateData() {};
+	 StateData() {};
 	//Variables
 	float gridSize;
 	sf::RenderWindow* window;
-	GraphicsSettings* gfxSettings;
-	std::map<std::string, int>* supportedKeys;
+	GraphicsSettings* gfxSettings ;
+	std::map<std::string, int>* supportedKeys ;
 	std::stack<State*>* states;
 
 };

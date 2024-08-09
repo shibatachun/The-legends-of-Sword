@@ -67,7 +67,7 @@ namespace gui{
 		
 
 	public:
-		DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[],  unsigned numOfElements, unsigned defalut_index = 0);
+		DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], size_t numOfElements, int defalut_index = 0);
 		~DropDownList();
 
 		//Accessors

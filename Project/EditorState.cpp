@@ -42,11 +42,11 @@ void EditorState::initVariables()
 void EditorState::initView()
 {
 	this->view.setSize(sf::Vector2f(
-		this->stateData->gfxSettings->resolution.width, 
-		this->stateData->gfxSettings->resolution.height));
+		static_cast<float>(this->stateData->gfxSettings->resolution.width), 
+		static_cast<float>(this->stateData->gfxSettings->resolution.height)));
 	this->view.setCenter(
-		this->stateData->gfxSettings->resolution.width / 2.f, 
-		this->stateData->gfxSettings->resolution.height / 2.f);
+		static_cast<float>(this->stateData->gfxSettings->resolution.width) / 2.f,
+		static_cast<float>(this->stateData->gfxSettings->resolution.height) / 2.f);
 
 
 	
@@ -96,7 +96,9 @@ void EditorState::initKeybinds()
 
 void EditorState::initButtons()
 {
-	this->buttons["SELECTOR"] =  new gui::Button(((this->stateData->window->getSize().x)*0.8), ((this->stateData->window->getSize().y) * 0.9),120.f, 100.f,
+	this->buttons["SELECTOR"] =  new gui::Button(
+		(static_cast<float>((this->stateData->window->getSize().x)*0.8)),
+		(static_cast<float>((this->stateData->window->getSize().y) * 0.9)),120.f, 100.f,
 		&font, "SELECTOR", 30,
 		sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(255, 255, 255, 50),
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));;
@@ -128,7 +130,7 @@ void EditorState::initGui()
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
-	this->textureSelector = new gui::TextureSelector((this->stateData->window->getSize().x)*0.5, (this->stateData->window->getSize().y) * 0.2
+	this->textureSelector = new gui::TextureSelector(static_cast<float> ((this->stateData->window->getSize().x) * 0.5), static_cast<float>((this->stateData->window->getSize().y) * 0.2)
 		, 500.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet(), this->font);
 
 }

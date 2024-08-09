@@ -159,7 +159,7 @@ void gui::Button::render(sf::RenderTarget& target)
 
 //Drop down List =============================================================================================
 gui::DropDownList::DropDownList(float x, float y, float width, float height,
-	sf::Font& font, std::string list[], unsigned numOfElements, unsigned default_index)
+	sf::Font& font, std::string list[], size_t numOfElements, int default_index)
 	:font(font), showList(false),keytimeMax(1.f),keytime(0.f)
 {
 	//unsigned nrOfElements = sizeof(list) / sizeof(std::string);
@@ -180,7 +180,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 				sf::Color(255, 255, 255, 155), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
 				sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200),
 				sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 0), sf::Color(20, 20, 20, 0),
-				i)
+				static_cast<unsigned short>(i))
 		);
 	}
 	
@@ -300,12 +300,12 @@ gui::TextureSelector::TextureSelector(float x, float y, float width,
 
 	if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
 	{
-		this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
+		this->sheet.setTextureRect(sf::IntRect(0, 0, static_cast<int>(this->bounds.getGlobalBounds().width), static_cast<int>(this->sheet.getGlobalBounds().height)));
 		
 	}
 	if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
 	{
-		this->sheet.setTextureRect(sf::IntRect(0, 0, this->sheet.getGlobalBounds().width, this->bounds.getGlobalBounds().height));
+		this->sheet.setTextureRect(sf::IntRect(0, 0, static_cast<int>(this->sheet.getGlobalBounds().width), static_cast<int>(this->bounds.getGlobalBounds().height)));
 	}
 
 	this->seletor.setPosition(x + offset, y);
