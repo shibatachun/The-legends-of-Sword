@@ -121,15 +121,16 @@ void Game::processEvents() {
 void Game::update()
 {
 	this->processEvents();
-	if (!this->states.empty() && this->mWindow->hasFocus())
+	if (!this->states.empty())
 	{
-		
-		this->states.top()->update(this->dt);
-		if (this->states.top()->getQuit())
-		{
-			this->states.top()->endState();
-			delete this->states.top();
-			this->states.pop();
+		if (this->mWindow->hasFocus()) {
+			this->states.top()->update(this->dt);
+			if (this->states.top()->getQuit())
+			{
+				this->states.top()->endState();
+				delete this->states.top();
+				this->states.pop();
+			}
 		}
 	}
 	//Application end
