@@ -7,7 +7,7 @@ Tile::Tile()
 	this->type = 0;
 }
 
-Tile::Tile(int x, int y, float gridSizeF, const sf::Texture& texture, const sf::IntRect texture_rect,
+Tile::Tile(int x, int y, float gridSizeF, int tileSheetIndex, const sf::Texture& texture, const sf::IntRect texture_rect,
 	bool collision, short type)
 {
 	this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
@@ -17,7 +17,7 @@ Tile::Tile(int x, int y, float gridSizeF, const sf::Texture& texture, const sf::
 	this->shape.setPosition(static_cast<float>(x)*gridSizeF, static_cast<float>(y) *gridSizeF);
 	this->shape.setTexture(&texture);
 	this->shape.setTextureRect(texture_rect);
-
+	this->tileSheetIndex = tileSheetIndex;
 	this->collision = collision;
 	this->type = type;
 }
@@ -29,6 +29,10 @@ const short& Tile::getType() const
 {
 	return this->type;
 
+}
+const int& Tile::getTileIndex() const
+{
+	return this->tileSheetIndex;
 }
 //Accessors
 const sf::Vector2f& Tile::getPosition() const
@@ -58,7 +62,7 @@ const std::string Tile::getAsString() const
 {
 	std::stringstream ss;
 
-	ss << this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
+	ss<<this->tileSheetIndex <<" "<< this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
 
 	return ss.str();
 }

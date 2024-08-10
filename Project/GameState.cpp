@@ -71,7 +71,7 @@ void GameState::initPlayers()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/images/Tiles/TX_Tileset_Grass.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, *this->stateData->textureResourcePath);
 	this->tileMap->loadFromFile("text.slmp");
 }
 

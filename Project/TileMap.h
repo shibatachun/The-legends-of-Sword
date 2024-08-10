@@ -14,6 +14,8 @@ private:
 	float gridSizeF;
 	int gridSizeI;
 	int layers;
+	int tileSheetCount;
+	short tileIndex;
 	sf::Vector2i maxSize;    //maxSize
 	
 	sf::Vector2f maxSizeWorldF;
@@ -21,6 +23,7 @@ private:
 	std::stack<Tile*> deferredRenderStack;
 	std::string textureFile;
 	std::map<int, std::string> textureFileSet;
+	std::map<int, sf::Texture> tileSheetSet;
 	sf::Texture tileSheet;
 	sf::RectangleShape collisionBox;
 
@@ -34,16 +37,20 @@ protected:
 	
 public:
 
-	TileMap(float gridSize, int width, int height,std::string texture_file);
+	TileMap(float gridSize, int width, int height, std::map<int, std::string>& textureFileSet);
 	virtual ~TileMap();
 
+	
+
+	//Initilizier
+	void initTextureSet();
 	//Accessors
 	const sf::Texture* getTileSheet();
 	const sf::Vector2f getMaxMapSize();
 	const int getLayerSize(const int x, const int y, const int z) const;
 
 	//Functions
-	void addtile(const int x, const int y, const int z, const sf::IntRect &texture_rect, const bool& collision, const short& type);
+	void addtile(const int x, const int y, const int z,  int tileIndex , const sf::IntRect &texture_rect, const bool& collision, const short& type);
 	void removeTile(const int x, const int y, const int z);
 
 	void saveToFile(const std::string file_name);

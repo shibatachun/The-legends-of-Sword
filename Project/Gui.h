@@ -124,6 +124,7 @@ namespace gui{
 		const bool& getHidden() const;
  		const sf::IntRect& getTextureRect() const;
 		const sf::Texture* getTexture() const;
+		const int getTileIndex() const;
 		//Modifiers
 		void setHidden(const bool& hidden);
 		void setActice(const bool& active);

@@ -390,6 +390,11 @@ const sf::Texture* gui::TextureSelector::getTexture() const
 	return this->sheet.getTexture();
 }
 
+const int gui::TextureSelector::getTileIndex() const
+{
+	return this->tileIndex;
+}
+
 void gui::TextureSelector::setHidden(const bool& hidden)
 {
 	this->hidden = hidden;

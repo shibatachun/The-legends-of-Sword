@@ -25,16 +25,16 @@ void TileMap::clear()
 	//std::cout << this->maps.size() << "\n";
 }
 
-TileMap::TileMap(float gridSize, int width, int height,std::string texture_file)
+TileMap::TileMap(float gridSize, int width, int height, std::map<int, std::string>& textureFileSet)
 {
 	this->gridSizeF = gridSize;
 	this->gridSizeI = static_cast<int>(this->gridSizeF);
 	this->maxSize.x = width;
 	this->maxSize.y = height;
-	this->maxSizeWorldF.x = gridSize * static_cast<float>( width);
+	this->maxSizeWorldF.x = gridSize * static_cast<float>(width);
 	this->maxSizeWorldF.y = gridSize * static_cast<float>(height);
 	this->layers = 1;
-	this->textureFile = texture_file;
+	this->textureFileSet = textureFileSet;
 
 	this->fromX = 0;
 	this->toX = 0;
@@ -60,10 +60,11 @@ TileMap::TileMap(float gridSize, int width, int height,std::string texture_file)
 		}
 	}
 
-	if (!this->tileSheet.loadFromFile(texture_file))
+	/*if (!this->tileSheet.loadFromFile(this->textureFile))
 	{
 		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TILETEXTURESHEET." << "\n";
-	}
+	}*/
+	initTextureSet();
 
 	this->collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
 	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
@@ -78,7 +79,23 @@ TileMap::~TileMap()
 {
 	this->clear();
 }
+
+//initializer
+
+void TileMap::initTextureSet()
+{
+	for (auto& i : this->textureFileSet)
+	{
+
+		if (this->tileSheetSet[this->tileSheetCount].loadFromFile(i.second))
+			tileSheetCount++;
+		else
+			std::cout << "ERROR::CAN NOT LOAD FROM TEXTURE FILE";
+	}
+}
 //Accessors
+
+
 
 const sf::Texture* TileMap::getTileSheet()
 {
@@ -88,6 +105,7 @@ const sf::Vector2f TileMap::getMaxMapSize()
 {	
 	return this->maxSizeWorldF;
 }
+
 const int TileMap::getLayerSize(const int x, const int y, const int z) const
 {
 	if (x >= 0 && x < this->maps.size())
@@ -104,7 +122,7 @@ const int TileMap::getLayerSize(const int x, const int y, const int z) const
 }
 //Functions
 
-void TileMap::addtile(const int x, const int y, const int z,const sf::IntRect& texture_rect, const bool& collision, const short& type)
+void TileMap::addtile(const int x, const int y, const int z, int tileIndex ,const sf::IntRect& texture_rect, const bool& collision, const short& type)
 {
 	//Take two indicies from the mouse position in the grid and add a tile to that position if the internal tilemap array allows it.
 	if(	x < this->maxSize.x && x>=0 && 
@@ -112,7 +130,7 @@ void TileMap::addtile(const int x, const int y, const int z,const sf::IntRect& t
 		z < this->layers && z>=0)
 	{
 		/*Ok to add tile*/
-		this->maps[x][y][z].push_back( new Tile(x , y , this->gridSizeF,this->tileSheet, texture_rect,collision,type));
+		this->maps[x][y][z].push_back( new Tile(x , y , this->gridSizeF,tileIndex,this->tileSheetSet[tileIndex], texture_rect, collision, type));
 	
 	}
 }
@@ -153,8 +171,7 @@ void TileMap::saveToFile(const std::string file_name)
 	{
 		out_file << this->maxSize.x << " " << this -> maxSize.y << "\n"
 			<< this->gridSizeI << "\n"
-			<< this->layers << "\n"
-			<< this->textureFile << "\n";
+			<< this->layers << "\n";
 		
 		for (int x = 0; x < this->maxSize.x; x++)
 		{
@@ -201,11 +218,12 @@ void TileMap::loadFromFile(const std::string file_name)
 
 		int trX = 0;
 		int trY = 0;
+		int index = 0;
 		bool collision = false;
 		short type = 0;
 
 		//Basic
-		in_file >> size.x >> size.y >> gridSize >> layers >> texture_file;
+		in_file >> size.x >> size.y >> gridSize >> layers;
 		
 		//Tiles
 		this->gridSizeF = static_cast<float>(gridSize);
@@ -215,7 +233,7 @@ void TileMap::loadFromFile(const std::string file_name)
 		//this->maxMapSize.x = gridSize * width;
 		//this->maxMapSize.y = gridSize * height;
 		this->layers = layers;
-		this->textureFile = texture_file;
+		//this->textureFile = texture_file;
 		this->clear();
 	
 		this->maps.resize(this->maxSize.x, std::vector<std::vector<std::vector<Tile*>>>());
@@ -236,17 +254,18 @@ void TileMap::loadFromFile(const std::string file_name)
 			}
 		}
 
-		if (!this->tileSheet.loadFromFile(texture_file))
+		/*if (!this->tileSheet.loadFromFile(texture_file))
 		{
 			std::cout << "ERROR::TILEMAP::FAILED TO LOAD TILETEXTURESHEET." << "\n";
-		}
+		}*/
 		//load all tiles
-		while (in_file >> x>>y>>z>>trX>>trY>>collision>>type)
+		while (in_file >> x>>y>>z>>index>>trX>>trY>>collision>>type)
 		{
 			this->maps[x][y][z].push_back (new Tile(
 				x, y,
 				this->gridSizeF, 
-				this->tileSheet, 
+				this->tileIndex,
+				this->tileSheetSet[index],
 				sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
 				collision,
 				type));
@@ -290,7 +309,7 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 	}
 
 	//Tiles
-	this->fromX = entity->getGridPosition(this->gridSizeI).x -1;
+	this->fromX = entity->getGridPosition(this->gridSizeI).x -10;
 	if (this->fromX < 0)
 	{
 		this->fromX = 0;
@@ -300,7 +319,7 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 		this->fromX = this->maxSize.x ;
 	}
 
-	this->toX = entity->getGridPosition(this->gridSizeI).x + 3;
+	this->toX = entity->getGridPosition(this->gridSizeI).x + 10;
 	if (this->toX < 0)
 	{
 		this->toX = 0;
@@ -310,7 +329,7 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 		this->toX = this->maxSize.x ;
 	}
 
-	this->fromY = entity->getGridPosition(this->gridSizeI).y - 1;
+	this->fromY = entity->getGridPosition(this->gridSizeI).y - 10;
 	if (this->fromY < 0)
 	{
 		this->fromY = 0;
@@ -321,7 +340,7 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 	}
 
 
-	this->toY = entity->getGridPosition(this->gridSizeI).y + 3;
+	this->toY = entity->getGridPosition(this->gridSizeI).y + 10;
 
 	if (this->toY < 0)
 	{
@@ -412,7 +431,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
 	
 	this->layer = 0;
-	this->fromX = gridPosition.x - 4;
+	this->fromX = gridPosition.x - 10;
 	if (this->fromX < 0)
 	{
 		this->fromX = 0;
@@ -422,7 +441,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 		this->fromX = this->maxSize.x;
 	}
 
-	this->toX = gridPosition.x + 5;
+	this->toX = gridPosition.x + 10;
 	if (this->toX < 0)
 	{
 		this->toX = 0;
@@ -432,7 +451,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 		this->toX = this->maxSize.x;
 	}
 
-	this->fromY = gridPosition.y - 4;
+	this->fromY = gridPosition.y - 10;
 	if (this->fromY < 0)
 	{
 		this->fromY = 0;
@@ -443,7 +462,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 	}
 
 
-	this->toY = gridPosition.y + 5;
+	this->toY = gridPosition.y + 10;
 
 	if (this->toY < 0)
 	{

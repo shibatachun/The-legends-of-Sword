@@ -11,14 +11,15 @@ protected:
 	sf::RectangleShape shape;
 	bool collision;
 	short type;
+	int tileSheetIndex;
 
 public:
 	Tile();
-	Tile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& texture,const sf::IntRect rect, bool collision = false, short type = TileTypes::DEFAULT);
+	Tile(int grid_x, int grid_y, float gridSizeF,int tileSheetIndex, const sf::Texture& texture,const sf::IntRect rect, bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
 	//Accessors
 	const short& getType() const;
-
+	const int& getTileIndex() const;
 	//Functions
 	const sf::Vector2f& getPosition() const;
 	const bool& getCollision() const;

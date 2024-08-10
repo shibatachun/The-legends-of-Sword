@@ -141,7 +141,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/images/Tiles/TX_Tileset_Grass.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, *this->stateData->textureResourcePath);
 }
 
 void EditorState::initTextureFileSets()
@@ -201,7 +201,7 @@ void EditorState::updateEditorInput(const float& dt)
 	{
 		if (!this->textureSelector->getActive()&& !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 		{
-			this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,this->collision,this->type);
+			this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0,this->textureSelector->getTileIndex(), this->textureRect, this->collision, this->type);
 		}
 		else {
 			this->selectorRect.setTexture(this->textureSelector->getTexture());
