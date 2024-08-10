@@ -278,8 +278,8 @@ void gui::DropDownList::render(sf::RenderTarget& target)
 
 gui::TextureSelector::TextureSelector(float x, float y, float width, 
 	float height,float gridSize,
-	const sf::Texture* texture_sheet, const sf::Font& font)
-	: keytimeMax(1.f), keytime(0.f)
+	const std::map<int, std::string>& textureTilePathSet, const sf::Font& font)
+	: keytimeMax(1.f), keytime(0.f), font(font)
 {
 	this->gridSize = gridSize;
 	this->active = false;
@@ -287,7 +287,9 @@ gui::TextureSelector::TextureSelector(float x, float y, float width,
 	this->positionX = x;
 	this->positionY = y;
 	float offset = 100.f;
-
+	this->tileSheetCount = 0;
+	this->tileIndex = 0;
+	this->textureTilePathSet = textureTilePathSet;
 
 	this->bounds.setSize(sf::Vector2f(width, height));
 	this->bounds.setPosition(x + offset, y);
@@ -295,17 +297,26 @@ gui::TextureSelector::TextureSelector(float x, float y, float width,
 	this->bounds.setOutlineThickness(1.f);
 	this->bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
 
-	this->sheet.setTexture(*texture_sheet);
+	//if (!this->tileSheet.loadFromFile(this->textureTilePathSet[0]))
+	//{
+	//	std::cout << "ERROR::CAN NOT LOAD TEXTURE FROM FILE TEXTURESELECTOR" << "\n";
+	//}
+	this->initTileSheetSet();
+	this->sheet.setTexture(this->tileSheetSet[0]);
 	this->sheet.setPosition(x + offset, y);
 
 	if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
 	{
-		this->sheet.setTextureRect(sf::IntRect(0, 0, static_cast<int>(this->bounds.getGlobalBounds().width), static_cast<int>(this->sheet.getGlobalBounds().height)));
+		this->sheet.setTextureRect(
+			sf::IntRect(0, 0, static_cast<int>(this->bounds.getGlobalBounds().width), 
+				static_cast<int>(this->sheet.getGlobalBounds().height)));
 		
 	}
 	if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
 	{
-		this->sheet.setTextureRect(sf::IntRect(0, 0, static_cast<int>(this->sheet.getGlobalBounds().width), static_cast<int>(this->bounds.getGlobalBounds().height)));
+		this->sheet.setTextureRect(
+			sf::IntRect(0, 0, static_cast<int>(this->sheet.getGlobalBounds().width), 
+			static_cast<int>(this->bounds.getGlobalBounds().height)));
 	}
 
 	this->seletor.setPosition(x + offset, y);
@@ -316,11 +327,47 @@ gui::TextureSelector::TextureSelector(float x, float y, float width,
 	
 	this->textureRect.width = static_cast<int>(gridSize);
 	this->textureRect.height = static_cast<int>(gridSize);
+
+	this->buttonBar.setSize(sf::Vector2f(width, 75.f));
+	this->buttonBar.setPosition(x+offset, y + height);
+	this->buttonBar.setFillColor(sf::Color(50, 50, 50, 100));
+	this->buttonBar.setOutlineThickness(1.f);
+	this->buttonBar.setOutlineColor(sf::Color(255, 255, 255, 200));
+
+
+	initButton();
 }
 
 gui::TextureSelector::~TextureSelector()
 {
 	
+}
+
+void gui::TextureSelector::initButton()
+{
+	this->buttons["NEXT"] = new gui::Button(this->bounds.getGlobalBounds().left
+		,(this->bounds.getGlobalBounds().top + this->bounds.getGlobalBounds().height), 150.f, 50.f,
+		&this->font, "NEXT", 50,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["LAST"] = new gui::Button(this->bounds.getGlobalBounds().left + 150.f
+		, (this->bounds.getGlobalBounds().top + this->bounds.getGlobalBounds().height), 150.f, 50.f,
+		&this->font, "LAST", 50,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+}
+
+void gui::TextureSelector::initTileSheetSet()
+{
+	for (auto& i : this->textureTilePathSet)
+	{
+
+		if (this->tileSheetSet[this->tileSheetCount].loadFromFile(i.second))
+			tileSheetCount++;
+		else
+			std::cout << "ERROR::CAN NOT LOAD FROM TEXTURE FILE";
+	}
 }
 //Accessors
 const bool& gui::TextureSelector::getActive() const
@@ -336,6 +383,11 @@ const bool& gui::TextureSelector::getHidden() const
 const sf::IntRect& gui::TextureSelector::getTextureRect() const
 {
 	return this->textureRect;
+}
+
+const sf::Texture* gui::TextureSelector::getTexture() const
+{
+	return this->sheet.getTexture();
 }
 
 void gui::TextureSelector::setHidden(const bool& hidden)
@@ -358,7 +410,10 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
 {
 	if (!this->hidden)
 	{
-		if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
+		updateButtons(mousePosWindow);
+		updateKeytime(dt);
+		if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow))
+			||this->buttonBar.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
 		{
 			this->active = true;
 		}
@@ -366,7 +421,7 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
 
 			this->active = false;
 		}
-		if (this->active)
+		if (this->active && !this->buttonBar.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
 		{
 			this->mousePosGrid.x = (mousePosWindow.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->gridSize);
 			this->mousePosGrid.y = (mousePosWindow.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->gridSize);
@@ -379,7 +434,41 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
 			this->textureRect.left = static_cast<int>(this->seletor.getPosition().x - this->bounds.getPosition().x);
 			this->textureRect.top = static_cast<int>(this->seletor.getPosition().y - this->bounds.getPosition().y);
 		}
+		
 	}
+}
+
+void gui::TextureSelector::updateButtons(const sf::Vector2i& mousePosWindow)
+{
+	
+	/*Update all the buttons in the state and handles their functionality */
+	for (auto& it : this->buttons)
+	{
+		it.second->update(mousePosWindow);
+
+	}
+	if (this->buttons["NEXT"]->isPressed()&& getKeytime())
+	{
+		this->tileIndex++;
+	
+		if (this->tileIndex < this->tileSheetCount)
+			this->sheet.setTexture(this->tileSheetSet[this->tileIndex]);
+		else
+			this->tileIndex--;
+			
+		
+	}
+	else if (this->buttons["LAST"]->isPressed() && getKeytime())
+	{
+		this->tileIndex--;
+		if (this->tileIndex >= 0)
+			this->sheet.setTexture(this->tileSheetSet[this->tileIndex]);
+		else
+			this->tileIndex++;
+		
+
+	}
+
 }
 
 const bool gui::TextureSelector::getKeytime()
@@ -406,8 +495,16 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 	
 	if (!this->hidden)
 	{
+		
 		target.draw(this->bounds);
+		target.draw(this->buttonBar);
 		target.draw(this->sheet);
+
+		for (auto& it : this->buttons)
+		{
+			it.second->render(target);
+		}
+
 		if (this->active)
 			target.draw(this->seletor);
 	}

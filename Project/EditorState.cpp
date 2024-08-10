@@ -13,7 +13,9 @@ EditorState::EditorState(StateData *state_data)
 	this->initPauseMenu();
 	this->initButtons();
 	this->initTileMap();
+	this->initTextureFileSets();
 	this->initGui();
+	
 
 }
 
@@ -130,14 +132,22 @@ void EditorState::initGui()
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
+	//this->textureSelector = new gui::TextureSelector(static_cast<float> ((this->stateData->window->getSize().x) * 0.5), static_cast<float>((this->stateData->window->getSize().y) * 0.2)
+	//	, 500.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet(), this->font);
 	this->textureSelector = new gui::TextureSelector(static_cast<float> ((this->stateData->window->getSize().x) * 0.5), static_cast<float>((this->stateData->window->getSize().y) * 0.2)
-		, 500.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet(), this->font);
+		, 500.f, 500.f, this->stateData->gridSize, this->textureFileSet, this->font);
 
 }
 
 void EditorState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/images/Tiles/TX_Tileset_Grass.png");
+}
+
+void EditorState::initTextureFileSets()
+{
+	this->textureFileSet = *this->stateData->textureResourcePath;
+
 }
 
 
@@ -194,6 +204,7 @@ void EditorState::updateEditorInput(const float& dt)
 			this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect,this->collision,this->type);
 		}
 		else {
+			this->selectorRect.setTexture(this->textureSelector->getTexture());
 			this->textureRect = this->textureSelector->getTextureRect();
 		}
 	}
@@ -255,6 +266,7 @@ void EditorState::updateGui(const float& dt)
 	if (!this->textureSelector->getActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 	{
 		this->selectorRect.setTextureRect(this->textureRect);
+
 		this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize,this->mousePosGrid.y * this->stateData->gridSize);
 	}
 	this->cursorText.setPosition(this->mousePosView.x+100.f, this->mousePosView.y - 50.f);

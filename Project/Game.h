@@ -43,6 +43,7 @@ private:
 	float gridSize;
 	std::stack<State*> states;
 	std::map<std::string, int> supportedKeys;
+	std::map<int, std::string> textureResource;
 
 	
 
@@ -53,6 +54,7 @@ private:
 	void initGraphicsSettings();
 	void initStateData();
 	void initStates();
+	void initTextureResource();
 
 	
 

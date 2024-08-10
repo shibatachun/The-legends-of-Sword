@@ -27,7 +27,7 @@ private:
     sf::RectangleShape sidebar;
     sf::IntRect textureRect;
     sf::RectangleShape selectorRect;
-
+    std::map<int, std::string> textureFileSet;
     gui::TextureSelector* textureSelector;
 
     sf::RectangleShape collisionBox;
@@ -47,6 +47,7 @@ private:
     void initPauseMenu();
     void initGui();
     void initTileMap();
+    void initTextureFileSets();
 
 public:
     EditorState(StateData *state_data);

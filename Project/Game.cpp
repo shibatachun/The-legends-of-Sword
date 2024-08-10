@@ -9,6 +9,7 @@ Game::Game()
 	this->initGraphicsSettings();
 	this->initWindow();
 	this->initKeys();
+	this->initTextureResource();
 	this->initStateData();
 	this->initStates();
 	
@@ -92,12 +93,20 @@ void Game::initStateData()
 	this->stateData.supportedKeys = &this->supportedKeys;
 	this->stateData.states = &this->states;
 	this->stateData.gridSize = this->gridSize;
+	this->stateData.textureResourcePath = &this->textureResource;
 }
 
 void Game::initStates()
 {
 	this->states.push(new MainMenuState(&this->stateData));
 	
+}
+
+void Game::initTextureResource()
+{
+	this->textureResource[0] = "Resources/images/Tiles/TX_Tileset_Grass_1.png";
+	this->textureResource[1] = "Resources/images/Tiles/Dungeon_Tileset_1.png";
+	this->textureResource[2] = "Resources/images/Tiles/TX_Tileset_Stone_Ground.png";
 }
 
 //Functions

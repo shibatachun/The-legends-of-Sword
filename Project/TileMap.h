@@ -20,6 +20,7 @@ private:
 	std::vector < std::vector< std::vector<std::vector<Tile*> > > >  maps;
 	std::stack<Tile*> deferredRenderStack;
 	std::string textureFile;
+	std::map<int, std::string> textureFileSet;
 	sf::Texture tileSheet;
 	sf::RectangleShape collisionBox;
 

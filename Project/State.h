@@ -17,6 +17,7 @@ public:
 	GraphicsSettings* gfxSettings ;
 	std::map<std::string, int>* supportedKeys ;
 	std::stack<State*>* states;
+	std::map<int, std::string>* textureResourcePath;
 
 };
 

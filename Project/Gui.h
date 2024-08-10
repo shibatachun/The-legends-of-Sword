@@ -70,6 +70,8 @@ namespace gui{
 		DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], size_t numOfElements, int defalut_index = 0);
 		~DropDownList();
 
+		//Initializer
+		
 		//Accessors
 		const unsigned short& getActiveElementId() const;
 		//Modifiers
@@ -92,29 +94,44 @@ namespace gui{
 		bool active;
 		float keytime;
 		float keytimeMax;
-
+		int tileSheetCount;
+		short tileIndex;
 		bool hidden;
 	
 		sf::RectangleShape bounds;
+		sf::RectangleShape buttonBar;
 		sf::Sprite sheet;
 		sf::RectangleShape seletor;
 		sf::Vector2u mousePosGrid;
 		sf::IntRect textureRect;
+		sf::Font font;
+		sf::Texture tileSheet;
+		std::map<std::string, gui::Button*> buttons;
+		std::map<int, std::string> textureTilePathSet;
+		std::map<int, sf::Texture> tileSheetSet;
+
 	
 
 	public:
-		TextureSelector(float x, float y,float width, float height, float gridSize,const sf::Texture* texture_sheet,const sf::Font& font);
+		TextureSelector(float x, float y,float width, float height, float gridSize,const std::map<int,std::string>& textureTileSet,const sf::Font& font);
 		~TextureSelector();
+
+		//Initializer
+		void initButton();
+		void initTileSheetSet();
 		//Accessors
 		const bool& getActive() const;
 		const bool& getHidden() const;
  		const sf::IntRect& getTextureRect() const;
+		const sf::Texture* getTexture() const;
 		//Modifiers
 		void setHidden(const bool& hidden);
 		void setActice(const bool& active);
 		void setPosition(const float x, const float y);
 		
 		//Function
+
+		void updateButtons(const sf::Vector2i& mousePosWindow);
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2i& mousePosWindow, const float& dt);
