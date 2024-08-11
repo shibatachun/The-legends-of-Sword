@@ -215,10 +215,10 @@ void TileMap::loadFromFile(const std::string file_name)
 		int x = 0;
 		int y = 0;
 		int z = 0;
-
+		int index = 0;
 		int trX = 0;
 		int trY = 0;
-		int index = 0;
+		
 		bool collision = false;
 		short type = 0;
 
@@ -259,12 +259,12 @@ void TileMap::loadFromFile(const std::string file_name)
 			std::cout << "ERROR::TILEMAP::FAILED TO LOAD TILETEXTURESHEET." << "\n";
 		}*/
 		//load all tiles
-		while (in_file >> x>>y>>z>>index>>trX>>trY>>collision>>type)
+		while (in_file >> x>>y>>z >> index>> trX >> trY>>collision>>type)
 		{
 			this->maps[x][y][z].push_back (new Tile(
 				x, y,
 				this->gridSizeF, 
-				this->tileIndex,
+				index,
 				this->tileSheetSet[index],
 				sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
 				collision,

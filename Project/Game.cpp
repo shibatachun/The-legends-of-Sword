@@ -30,7 +30,7 @@ void Game::initVariables()
 	this->mWindow = NULL;
 
 	this->dt = 0.f;
-	this->gridSize = 100.f;
+	this->gridSize = 128.f;
 }
 
 //Initializer functions
@@ -104,9 +104,23 @@ void Game::initStates()
 
 void Game::initTextureResource()
 {
-	this->textureResource[0] = "Resources/images/Tiles/TX_Tileset_Grass_1.png";
-	this->textureResource[1] = "Resources/images/Tiles/Dungeon_Tileset_1.png";
-	this->textureResource[2] = "Resources/images/Tiles/TX_Tileset_Stone_Ground.png";
+	int index = 0;
+	std::string directoryPath = "Resources/images/Tiles";
+	for (const auto& entry : std::filesystem::directory_iterator(directoryPath))
+	{
+		if (entry.is_regular_file() && entry.path().extension() == ".png") {
+		
+			textureResource[index] = entry.path().string();
+			index++;
+		}
+	}
+	//this->textureResource[0] = "Resources/images/Tiles/TX_Tileset_Grass_1.png";
+	//this->textureResource[1] = "Resources/images/Tiles/Dungeon_Tileset_1.png";
+	//this->textureResource[2] = "Resources/images/Tiles/TX_Tileset_Stone_Ground.png";
+
+	for (const auto& [key, value] : textureResource) {
+		std::cout << "Index: " << key << " | Path: " << value << std::endl;
+	}
 }
 
 //Functions

@@ -62,7 +62,7 @@ const std::string Tile::getAsString() const
 {
 	std::stringstream ss;
 
-	ss<<this->tileSheetIndex <<" "<< this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
+	ss<< this->tileSheetIndex <<" "<< this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
 
 	return ss.str();
 }
