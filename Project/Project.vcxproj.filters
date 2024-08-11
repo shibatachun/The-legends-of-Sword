@@ -90,6 +90,9 @@
     <ClCompile Include="GraphicsSettings.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AttributeComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
