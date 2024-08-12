@@ -1,12 +1,16 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
+
 #include "Tile.h"
 #include "Gui.h"
 #include "Entity.h"
+#include "QuadTree.h"
 
 class Tile;
 class Entity;
+class QuadTree;
+
 class TileMap
 {
 private:
@@ -26,7 +30,7 @@ private:
 	std::map<int, sf::Texture> tileSheetSet;
 	sf::Texture tileSheet;
 	sf::RectangleShape collisionBox;
-
+    QuadTree* quadtree;
 	//Culling
 	int fromX;
 	int toX;
@@ -62,4 +66,6 @@ public:
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);
 	void renderDeferred(sf::RenderTarget& target);
 };
+
+
 #endif
