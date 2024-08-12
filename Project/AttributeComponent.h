@@ -11,11 +11,12 @@ public:
 	unsigned expNext;
 	unsigned AttributePoints;
 	//Attributes
-	unsigned vitality;
-	unsigned strength;
-	unsigned dexterity;
-	unsigned agility;
-	unsigned intelligence;
+	
+	int vitality;
+	int strength;
+	int dexterity;
+	int agility;
+	int intelligence;
 	//Stats
 	int hp;
 	int hpMax;
@@ -28,9 +29,9 @@ public:
 	AttributeComponent(unsigned level);
 	virtual ~AttributeComponent();
 	//Functions
-	void calculateExpNext();
-	void updateStates();
-	void levelup();
+	void calcExpNext();
+	void updateStates(const bool rest);
+	void updateLevel();
 	void update();
 };
 #endif
