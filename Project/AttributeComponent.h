@@ -30,6 +30,8 @@ public:
 	virtual ~AttributeComponent();
 	//Functions
 	void calcExpNext();
+	std::string debugPrint() const;
+	void gainExp(const unsigned exp);
 	void updateStates(const bool rest);
 	void updateLevel();
 	void update();
