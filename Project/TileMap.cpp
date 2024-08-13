@@ -471,10 +471,10 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 
 	int range = 1;
 	sf::Vector2i entityGridPos = entity->getGridPosition(this->gridSizeI);
-	sf::FloatRect entityBounds((entityGridPos.x - range) * this->gridSizeI,
-		(entityGridPos.y - range) * this->gridSizeI,
-		(2 * range + 1) * this->gridSizeI,
-		(2 * range + 1) * this->gridSizeI);
+	sf::FloatRect entityBounds(static_cast<float>((entityGridPos.x - range) * this->gridSizeI),
+		static_cast<float>((entityGridPos.y - range) * this->gridSizeI),
+		static_cast<float>((2 * range + 1) * this->gridSizeI),
+		static_cast<float>((2 * range + 1) * this->gridSizeI));
 	//std::cout << "entity bounds" << entityBounds.getPosition().x << " " << entityBounds.getPosition().y << std::endl;
 	std::vector<Tile*> potentialColliders;
 	this->quadtree->query(entityBounds, potentialColliders); 
