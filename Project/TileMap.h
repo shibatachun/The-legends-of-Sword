@@ -9,6 +9,7 @@
 
 class Tile;
 class Entity;
+template<typename T>
 class QuadTree;
 
 class TileMap
@@ -30,7 +31,7 @@ private:
 	std::map<int, sf::Texture> tileSheetSet;
 	sf::Texture tileSheet;
 	sf::RectangleShape collisionBox;
-    QuadTree* quadtree;
+    QuadTree<Tile>* quadtree;
 	//Culling
 	int fromX;
 	int toX;

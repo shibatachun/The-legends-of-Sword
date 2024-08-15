@@ -6,13 +6,13 @@
 
 
 
-
+template <typename T>
 class QuadTree {
 
 private:
     class QuadTreeNode {
     public:
-        std::vector<Tile*> objects;
+        std::vector<T *> objects;
         QuadTreeNode* children[4]; 
         sf::FloatRect bounds;
         int MAX_OBJECTS = 4;
@@ -29,7 +29,7 @@ private:
             }
         }
 
-        void insert(Tile* object) {
+        void insert(T* object) {
             
             if (children[0] != nullptr) {
                 int index = getChildIndex(object);
@@ -94,7 +94,7 @@ private:
         }
 
         // insert the node upon its position
-        int getChildIndex(Tile* object) {
+        int getChildIndex(T * object) {
             int index = -1;
             float midX = bounds.left + bounds.width / 2.0f;
             float midY = bounds.top + bounds.height / 2.0f;
@@ -149,18 +149,49 @@ public:
     virtual ~QuadTree();
 
     
-    void insert(Tile* tile);
+    void insert(T * tile);
 
     
-    void query(const sf::FloatRect& range, std::vector<Tile*>& results);
+    void query(const sf::FloatRect& range, std::vector<T *>& results);
 
 
     void clear();
    
     void printAllTiles() const;
-
-
 };
 
+template <typename T>
+QuadTree<T>::QuadTree(const sf::FloatRect& bounds)
+{
+    this->root = root = new QuadTreeNode(bounds);
+}
+template <typename T>
+QuadTree<T>::~QuadTree()
+{
+    delete this->root;
+}
+template <typename T>
+void QuadTree<T>::insert(T* tile)
+{
+    if (this->root->bounds.contains(tile->getPosition())) {
+        this->root->insert(tile);
+    }
+}
+template <typename T>
+void QuadTree<T>::query(const sf::FloatRect& range, std::vector<T*>& results)
+{
+    this->root->queryRange(range, results);
+}
+template <typename T>
+void QuadTree<T>::clear()
+{
+    delete this->root;
+    this->root = new QuadTreeNode(root->bounds);
+}
+template <typename T>
+void QuadTree<T>::printAllTiles() const
+{
+    printNode(this->root);
+}
 #endif
 

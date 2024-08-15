@@ -4,10 +4,11 @@
 
 #include "PauseMenu.h"
 #include "TileMap.h"
-
+#include "PlayerGUI.h"
 
 class PauseMenu;
 class Player;
+class PlayerGUI;
 class TileMap;
 class sf::View;
 class sf::Font;
@@ -25,6 +26,7 @@ private:
 
     PauseMenu* pmenu;
     Player* player;
+    PlayerGUI* playerGUI;
     sf::Font font;
     //Resources
     std::map<std::string, sf::Texture> textures;
@@ -37,6 +39,7 @@ private:
     void initTextures();
     void initPauseMenu();
     void initPlayers();
+    void initPlayerGUI();
     void initTileMap();
 
 public:
@@ -48,6 +51,7 @@ public:
     void updateInput(const float& dt);
     
     void updatePlayerInput(const float& dt);
+    void updatePlayerGUI(const float& dt);
     void updatePauseMenuButtons();
     void updateTileMap(const float& dt);
     void update(const float& dt);

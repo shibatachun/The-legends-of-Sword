@@ -30,7 +30,7 @@ void Game::initVariables()
 	this->mWindow = NULL;
 
 	this->dt = 0.f;
-	this->gridSize = 128.f;
+	this->gridSize = 64.f;
 }
 
 //Initializer functions

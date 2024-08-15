@@ -37,7 +37,7 @@ TileMap::TileMap(float gridSize, int width, int height, std::map<int, std::strin
 	this->maxSizeWorldF.y = gridSize * static_cast<float>(height);
 	this->layers = 1;
 	this->textureFileSet = textureFileSet;
-	this->quadtree = new QuadTree(sf::FloatRect(0, 0, this->maxSizeWorldF.x, this->maxSizeWorldF.y));
+	this->quadtree = new QuadTree<Tile>(sf::FloatRect(0, 0, this->maxSizeWorldF.x, this->maxSizeWorldF.y));
 
 	this->fromX = 0;
 	this->toX = 0;
@@ -106,6 +106,7 @@ const sf::Texture* TileMap::getTileSheet()
 {
 	return &this->tileSheet;
 }
+
 const sf::Vector2f TileMap::getMaxMapSize()
 {	
 	return this->maxSizeWorldF;
@@ -113,11 +114,11 @@ const sf::Vector2f TileMap::getMaxMapSize()
 
 const int TileMap::getLayerSize(const int x, const int y, const int z) const
 {
-	if (x >= 0 && x < this->maps.size())
+	if (x >= 0 && x < static_cast<int>(this->maps.size()))
 	{
-		if (y >= 0 && y < this->maps[x].size())
+		if (y >= 0 && y < static_cast<int>(this->maps[x].size()))
 		{
-			if (layer >= 0 && layer < this->maps[x][y].size())
+			if (layer >= 0 && layer < static_cast<int>(this->maps[x][y].size()))
 			{
 				return this->maps[x][y][layer].size();
 			}
@@ -244,7 +245,7 @@ void TileMap::loadFromFile(const std::string file_name)
 		//this->maxMapSize.x = gridSize * width;
 		//this->maxMapSize.y = gridSize * height;
 		this->clear();
-		this->quadtree = new QuadTree(sf::FloatRect(0, 0, this->gridSizeF * this->maxSize.x, this->gridSizeF * this->maxSize.y));
+		this->quadtree = new QuadTree<Tile>(sf::FloatRect(0, 0, this->gridSizeF * this->maxSize.x, this->gridSizeF * this->maxSize.y));
 		this->layers = layers;
 		//this->textureFile = texture_file;
 		

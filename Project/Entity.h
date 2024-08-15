@@ -36,7 +36,7 @@ public:
 		float width, float height);
 	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
 	void createAnimationComponent( sf::Texture& texture_sheet);
-	void createAttributeComponent(const unsigned level);
+	void createAttributeComponent(const int level);
 
 	//Acceesors
 	virtual const sf::Vector2f& getPosition() const;
