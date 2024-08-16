@@ -63,6 +63,8 @@ public:
 	const bool getKeytime();
 	
 	//Functions
+	
+
 	void endState();
 	void pauseState();
 	void unpauseState();

@@ -37,11 +37,10 @@ private:
     //Functions
 
     void initVariables();
-    void initBackground();
     void initFonts();
     void initKeybinds();
     void initGui();
-    void initText();
+    void resetGui();
 
     void RePosition();
     

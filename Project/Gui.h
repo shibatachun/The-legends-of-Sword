@@ -5,6 +5,13 @@
 
 enum buuton_states{BTN_IDLE = 0,BTN_HOVER, BTN_ACTIVE };
 namespace gui{
+
+	const float p2pX(const float perc, sf::VideoMode& vm) ;
+
+	const float p2pY(const float perc, sf::VideoMode& vm);
+
+	const unsigned calCCharSize(sf::VideoMode& vm, const unsigned modifier = 60);
+
 	class Button
 	{
 	private:
@@ -77,6 +84,7 @@ namespace gui{
 		//Modifiers
 		
 		//Functions
+
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2i& mousePosWindow,const float& dt);

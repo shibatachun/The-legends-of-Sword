@@ -47,10 +47,14 @@ void State::pauseState()
 	this->paused = true;
 }
 
+
+
 void State::unpauseState()
 {
 	this->paused = false;
 }
+
+
 
 void State::updateMousePositions(sf::View* view)
 {
@@ -64,6 +68,8 @@ void State::updateMousePositions(sf::View* view)
 		static_cast<int>(this->mousePosView.y) / static_cast<int>(this->gridSize));
 	this->window->setView(this->window->getDefaultView());
 }
+
+
 
 void State::updateKeytime(const float& dt)
 {
