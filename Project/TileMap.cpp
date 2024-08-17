@@ -77,8 +77,6 @@ TileMap::TileMap(float gridSize, int width, int height, std::map<int, std::strin
 
 }
 
-
-
 TileMap::~TileMap()
 {
 	this->clear();
@@ -100,8 +98,6 @@ void TileMap::initTextureSet()
 }
 //Accessors
 
-
-
 const sf::Texture* TileMap::getTileSheet()
 {
 	return &this->tileSheet;
@@ -120,7 +116,7 @@ const int TileMap::getLayerSize(const int x, const int y, const int z) const
 		{
 			if (layer >= 0 && layer < static_cast<int>(this->maps[x][y].size()))
 			{
-				return this->maps[x][y][layer].size();
+				return static_cast<int>(this->maps[x][y][layer].size());
 			}
 		}
 	}
@@ -141,7 +137,7 @@ void TileMap::addtile(const int x, const int y, const int z, int tileIndex ,cons
 		if (collision)
 		{
 			this->quadtree->insert(tile);
-			this->quadtree->printAllTiles();
+			//this->quadtree->printAllTiles();
 		}
 	
 	}
@@ -286,9 +282,10 @@ void TileMap::loadFromFile(const std::string file_name)
 			this->maps[x][y][z].push_back (tile);
 			if (collision)
 			{
-				std::cout << "dui" << "\n";
+				//std::cout << "dui" << "\n";
 				this->quadtree->insert(tile);
-				this->quadtree->printAllTiles();
+				//this->quadtree->printAllTiles();
+				
 			}
 		}
 	}
@@ -472,37 +469,47 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 
 	int range = 10;
 	sf::Vector2i entityGridPos = entity->getGridPosition(this->gridSizeI);
+	sf::Vector2f entityVelocity = entity->getVelocity();
+	//std::cout << "x: " << entityVelocity.x << "y:" << entityVelocity.y << std::endl;
 	sf::FloatRect entityBounds(static_cast<float>((entityGridPos.x - range) * this->gridSizeI),
 		static_cast<float>((entityGridPos.y - range) * this->gridSizeI),
 		static_cast<float>((2 * range + 1) * this->gridSizeI),
 		static_cast<float>((2 * range + 1) * this->gridSizeI));
 	//std::cout << "entity bounds" << entityBounds.getPosition().x << " " << entityBounds.getPosition().y << std::endl;
 	std::vector<Tile*> potentialColliders;
-	this->quadtree->query(entityBounds, potentialColliders); 
+	this->quadtree->query(entityBounds, potentialColliders,entityVelocity); 
 	
 
 	std::sort(potentialColliders.begin(), potentialColliders.end(), [](const Tile* a, const Tile* b) {
 		return a->getGlobalBounds().left < b->getGlobalBounds().left;
 		}
 	);
-	/*system("cls");
-	for (auto& i : potentialColliders)
+	
+	/*for (auto& i : potentialColliders)
 	{
 		sf::Vector2f pos = i->getPosition();
 		std::cout << "Potential Colliders Tiles at position: (" << pos.x << ", " << pos.y << ")" << std::endl;
 	}*/
+	int count = 0;
 	for (Tile* tile : potentialColliders) {
 		if (tile != NULL) {
 			
 			sf::FloatRect playerBounds = entity->getGlobalBounds();
 			sf::FloatRect wallBounds = tile->getGlobalBounds();
 			sf::FloatRect nextPositionBound = entity->getNextPositionBounds(dt);
+			
+			if (wallBounds.left+wallBounds.width < playerBounds.left && entityVelocity.x>0) //walk left
+			{
+				continue;
+			}
+		
 			if (wallBounds.left > playerBounds.left + playerBounds.width)
 			{
 				//std::cout << "Break the loop£¡" << std::endl;
 				break;
 
 			}
+			count++;
 			if (tile->getCollision() &&
 				tile->intersects(nextPositionBound))
 			{
@@ -547,6 +554,7 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 			
 		}
 	}
+	std::cout << "total potentialColliders size: " << potentialColliders.size() << ", Total check count:  " << count << std::endl;
 }
 
 void TileMap::update()
@@ -625,6 +633,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 		}
 
 	}
+	//this->quadtree->draw(target);
 	
 	/*else {
 		for (auto& x : this->maps)

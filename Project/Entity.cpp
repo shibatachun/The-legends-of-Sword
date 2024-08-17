@@ -94,6 +94,11 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& dt) const
 	return sf::FloatRect(-1.f,-1.f,-1.f,-1.f);
 }
 
+const sf::Vector2f& Entity::getVelocity() const
+{
+	return this->movementComponent->getVelocity();
+}
+
 
 
 //Functions
