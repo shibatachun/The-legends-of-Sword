@@ -36,6 +36,8 @@ void Game::initVariables()
 //Initializer functions
 void Game::initWindow()
 {	
+	this->gfxSettings.contextSettings.majorVersion = 3;
+	this->gfxSettings.contextSettings.minorVersion = 3;
 	
 
 	if (this->gfxSettings.fullscreen)

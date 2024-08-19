@@ -18,6 +18,7 @@ private:
     sf::RectangleShape background;
     sf::Font font;
 
+    sf::RectangleShape btnBackground;
     std::map<std::string, gui::Button*> buttons;
     std::map<std::string, sf::Music> bgm;
 

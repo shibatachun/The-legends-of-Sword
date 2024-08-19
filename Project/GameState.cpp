@@ -49,7 +49,7 @@ void GameState::initKeybinds()
 void GameState::initTextures()
 {
 	
-	if (!this->textures["PLAYER"].loadFromFile("Resources/images/Sprites/Player/soldier_all_sheet.png"))
+	if (!this->textures["PLAYER"].loadFromFile("Resources/images/Sprites/Player/sheet_10.png"))
 	{
 		throw "ERROR::GAME_STATE::FAILD_TO_LOAD_PLAYER_TEXTURE";
 	}
@@ -62,6 +62,15 @@ void GameState::initPauseMenu()
 	sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
 	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution,this->font);
 	this->pmenu->addButton("QUIT", gui::p2pY(18.5f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calCCharSize(vm), "Quit");
+}
+
+void GameState::initShaders()
+{
+	if (!this->core_shader.loadFromFile("vertex_shader.vert", "fragment_shader.frag"))
+	{
+		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << std::endl;
+	}
+	
 }
 
 void GameState::initPlayers()
@@ -98,6 +107,7 @@ GameState::GameState(StateData* state_data)
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
+	this->initShaders();
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
@@ -113,7 +123,14 @@ GameState::~GameState()
 
 void GameState::updateView(const float& dt)
 {
-	this->view.setCenter(std::floor(this->player->getPosition().x),std::floorf(this->player->getPosition().y));
+	//Mouse view
+
+	this->view.setCenter(
+		std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x)
+			- static_cast<float>(this->stateData->gfxSettings->resolution.width/2)) / 5.f)
+		,std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) 
+			- static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
+	);
 }
 
 void GameState::updateInput(const float& dt)
@@ -214,9 +231,17 @@ void GameState::render(sf::RenderTarget* target )
 
 	this->renderTexture.clear();
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture,this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
-	this->player->render(this->renderTexture);
-	this->tileMap->renderDeferred(this->renderTexture);
+	this->tileMap->render(this->renderTexture,30,30,
+		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
+		&this->core_shader,
+		this->player->getCenter(), false);
+	/*this->tileMap->render(this->renderTexture, 30, 30,
+		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
+		NULL,
+		sf::Vector2f(), false);*/
+	this->player->render(this->renderTexture,&this->core_shader, false);
+	//this->tileMap->renderDeferred(this->renderTexture,NULL,sf::Vector2f());
+	this->tileMap->renderDeferred(this->renderTexture,&this->core_shader,this->player->getCenter());
 
 	//Render GUI
 	this->renderTexture.setView(this->renderTexture.getDefaultView());

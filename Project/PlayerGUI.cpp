@@ -48,10 +48,10 @@ void PlayerGUI::initEXPBar()
 	this->expBarInner.setPosition(this->expBarBack.getPosition());
 
 	this->expBarText.setFont(this->font);
-	this->expBarText.setCharacterSize(gui::calCCharSize(this->vm, 120));
+	this->expBarText.setCharacterSize(gui::calCCharSize(this->vm, 200));
 	this->expBarText.setPosition(
 		this->expBarInner.getPosition().x + gui::p2pX(0.53f, this->vm),
-		this->expBarInner.getPosition().y + gui::p2pY(0.5f, this->vm));
+		this->expBarInner.getPosition().y + gui::p2pY(0.15f, this->vm));
 }
 
 void PlayerGUI::initLevelBar()
