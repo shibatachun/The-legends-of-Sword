@@ -5,6 +5,8 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "PlayerGUI.h"
+#include "Sword.h"
+#include "Bow.h"
 
 class PauseMenu;
 class Player;
@@ -21,6 +23,7 @@ class GameState :
 private:
 
     sf::View view;
+    sf::Vector2i viewGridPosition;
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 

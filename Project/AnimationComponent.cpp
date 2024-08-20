@@ -25,10 +25,11 @@ AnimationComponent::~AnimationComponent()
 
 void AnimationComponent::addAnimation(const std::string key
 	, float animation_timer,
-	int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height)
-{
+	int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height,  float offset_x,  float offset_y)
+{	
+	
 	this->animations[key] = new Animation(this->sprite, this->textureSheet
-		, animation_timer, start_frame_x, start_frame_y, frames_x, frames_y, width, height);
+		, animation_timer, start_frame_x, start_frame_y, frames_x, frames_y, width, height,offset_x,offset_y);
 }
 
 bool AnimationComponent::play(const std::string key, const float& dt, const bool priority )

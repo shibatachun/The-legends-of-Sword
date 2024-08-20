@@ -3,27 +3,31 @@
 
 void TileMap::clear()
 {
-	for (int x = 0; x < this->maxSize.x; x++)
-	{
-		for (int y = 0; y < this->maxSize.y; y++)
-		{
-			for (int z = 0; z < this->layers; z++)
-			{
-				for (size_t k = 0; k < this->maps[x][y][z].size(); k++)
-				{
-					delete this->maps[x][y][z][k];
-					this->maps[x][y][z][k] = NULL;
-				}
-				
-				this->maps[x][y][z].clear();
-			}
-			this->maps[x][y].clear();
-		}
-		this->maps[x].clear();
-	}
-	this->maps.clear();
 
-	this->quadtree->clear();
+	if (!this->maps.empty())
+	{
+		for (int x = 0; x < this->maxSize.x; x++)
+		{
+			for (int y = 0; y < this->maxSize.y; y++)
+			{
+				for (int z = 0; z < this->layers; z++)
+				{
+					for (size_t k = 0; k < this->maps[x][y][z].size(); k++)
+					{
+						delete this->maps[x][y][z][k];
+						this->maps[x][y][z][k] = NULL;
+					}
+
+					this->maps[x][y][z].clear();
+				}
+				this->maps[x][y].clear();
+			}
+			this->maps[x].clear();
+		}
+		this->maps.clear();
+
+		this->quadtree->clear();
+	}
 	//std::cout << this->maps.size() << "\n";
 }
 
@@ -77,6 +81,23 @@ TileMap::TileMap(float gridSize, int width, int height, std::map<int, std::strin
 
 }
 
+TileMap::TileMap(const std::string file_name, std::map<int, std::string>& textureFileSet)
+{
+
+	this->fromX = 0;
+	this->toX = 0;
+	this->fromY = 0;
+	this->toY = 0;
+	this->layer = 0;
+	this->textureFileSet = textureFileSet;
+	this->initTextureSet();
+	this->loadFromFile(file_name);
+	this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
+	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+	this->collisionBox.setOutlineColor(sf::Color::Red);
+	this->collisionBox.setOutlineThickness(1.f);
+}
+
 TileMap::~TileMap()
 {
 	this->clear();
@@ -97,6 +118,19 @@ void TileMap::initTextureSet()
 	}
 }
 //Accessors
+
+const bool TileMap::tileEmpty(const int x, const int y, const int z) const
+{
+	if (x >= 0 && x < this->maxSize.x &&
+		y >= 0 && y < this->maxSize.y &&
+		z >= 0 && z < this->layers)
+	{
+		return this->maps[x][y][z].empty();
+	}
+		
+	//throw("ERROR::TILEMAP::TILEEMTPY::TRYING TO ACCESS OUT OF BOUNDS TILE");
+	return false;
+}
 
 const sf::Texture* TileMap::getTileSheet()
 {
@@ -121,6 +155,14 @@ const int TileMap::getLayerSize(const int x, const int y, const int z) const
 		}
 	}
 	return -1;
+}
+const sf::Vector2i& TileMap::getMaxSizeGrid() const
+{
+	return this->maxSize;
+}
+const sf::Vector2f& TileMap::getMaxSizeF() const
+{
+	return this->maxSizeWorldF;
 }
 //Functions
 
@@ -238,6 +280,8 @@ void TileMap::loadFromFile(const std::string file_name)
 		this->gridSizeI = static_cast<unsigned>(this->gridSizeF);
 		this->maxSize.x = size.x;
 		this->maxSize.y = size.y;
+		this->maxSizeWorldF.x = static_cast<float>(size.x * gridSize);
+		this->maxSizeWorldF.y = static_cast<float>(size.y * gridSize);
 		//this->maxMapSize.x = gridSize * width;
 		//this->maxMapSize.y = gridSize * height;
 		this->clear();

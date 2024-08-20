@@ -43,6 +43,7 @@ protected:
 public:
 
 	TileMap(float gridSize, int width, int height, std::map<int, std::string>& textureFileSet);
+	TileMap(const std::string file_name, std::map<int, std::string>& textureFileSet);
 	virtual ~TileMap();
 
 	
@@ -50,9 +51,12 @@ public:
 	//Initilizier
 	void initTextureSet();
 	//Accessors
+	const bool tileEmpty(const int x, const int y, const int z) const;
 	const sf::Texture* getTileSheet();
 	const sf::Vector2f getMaxMapSize();
 	const int getLayerSize(const int x, const int y, const int z) const;
+	const sf::Vector2i& getMaxSizeGrid() const;
+	const sf::Vector2f& getMaxSizeF() const;
 
 	//Functions
 	void addtile(const int x, const int y, const int z,  int tileIndex , const sf::IntRect &texture_rect, const bool& collision, const short& type);

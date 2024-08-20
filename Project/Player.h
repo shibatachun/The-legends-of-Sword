@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "Entity.h"
+#include "Sword.h"
 
 class Entity;
 class Player :
@@ -11,6 +12,9 @@ private:
     //Variables
     float maxVelocity;
     bool attacking;
+    Sword sword; 
+    
+
     MovementComponent* movement;
     //Initializer functions
     void initVariables();
@@ -28,8 +32,8 @@ public:
     void gainEXP(const int exp);
     void updataAttack();
     void updateAnimation(const float& dt);
-    virtual void update(const float& dt);
-    void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox = false);
+    virtual void update(const float& dt,sf::Vector2f& mouse_Pos_View);
+    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool show_hitbox = false);
 
 };
 

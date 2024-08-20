@@ -49,7 +49,7 @@ void GameState::initKeybinds()
 void GameState::initTextures()
 {
 	
-	if (!this->textures["PLAYER"].loadFromFile("Resources/images/Sprites/Player/sheet_10.png"))
+	if (!this->textures["PLAYER"].loadFromFile("Resources/images/Sprites/Player/Sheet.png"))
 	{
 		throw "ERROR::GAME_STATE::FAILD_TO_LOAD_PLAYER_TEXTURE";
 	}
@@ -86,8 +86,8 @@ void GameState::initPlayerGUI()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, *this->stateData->textureResourcePath);
-	this->tileMap->loadFromFile("text.slmp");
+	//this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, *this->stateData->textureResourcePath);
+	this->tileMap = new TileMap("text.slmp",*this->stateData->textureResourcePath);
 }
 
 void GameState::initFonts()
@@ -111,6 +111,8 @@ GameState::GameState(StateData* state_data)
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
+
+	
 }
 
 GameState::~GameState()
@@ -127,10 +129,37 @@ void GameState::updateView(const float& dt)
 
 	this->view.setCenter(
 		std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x)
-			- static_cast<float>(this->stateData->gfxSettings->resolution.width/2)) / 5.f)
+			- static_cast<float>(this->stateData->gfxSettings->resolution.width/2)) / 10.f)
 		,std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) 
-			- static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
+			- static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 10.f)
 	);
+	if (this->view.getSize().x <= this->tileMap->getMaxSizeF().x)
+	{
+		if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
+		{
+			this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
+
+		}
+		else if (this->view.getCenter().x + this->view.getSize().x / 2.f > this->tileMap->getMaxSizeF().x)
+		{
+			this->view.setCenter(this->tileMap->getMaxSizeF().x - this->view.getCenter().x / 2.f, this->view.getCenter().y);
+
+		}
+	}
+	if (this->view.getSize().y <= this->tileMap->getMaxSizeF().y) {
+		if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
+		{
+			this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
+
+		}
+		else if (this->view.getCenter().y + this->view.getSize().y / 2.f > this->tileMap->getMaxSizeF().y)
+		{
+			this->view.setCenter(this->view.getCenter().x, this->tileMap->getMaxSizeF().y - this->view.getSize().y / 2.f);
+		}
+	}
+		this->viewGridPosition.x = static_cast<int>(this->view.getCenter().x) / static_cast<int>(this->stateData->gridSize);
+		this->viewGridPosition.y = static_cast<int>(this->view.getCenter().y) / static_cast<int>(this->stateData->gridSize);
+	
 }
 
 void GameState::updateInput(const float& dt)
@@ -206,7 +235,7 @@ void GameState::update(const float& dt)
 
 		this->updateTileMap(dt);
 
-		this->player->update(dt);
+		this->player->update(dt,this->mousePosView);
 		this->playerGUI->update(dt);
 
 		
@@ -231,8 +260,8 @@ void GameState::render(sf::RenderTarget* target )
 
 	this->renderTexture.clear();
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture,30,30,
-		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
+	this->tileMap->render(this->renderTexture,15,9,
+		this->viewGridPosition,
 		&this->core_shader,
 		this->player->getCenter(), false);
 	/*this->tileMap->render(this->renderTexture, 30, 30,

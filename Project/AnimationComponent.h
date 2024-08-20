@@ -25,7 +25,7 @@ private:
 
 		Animation(sf::Sprite& sprite,sf::Texture& texture_sheet
 			,float animation_timer,
-			int start_frame_x,int start_frame_y,int frames_x,int frames_y, int width, int height)
+			int start_frame_x,int start_frame_y,int frames_x,int frames_y, int width, int height, float offset_x, float offset_y)
 			: sprite(sprite),textureSheet(texture_sheet),
 			animationTimer(animation_timer),timer(0.1f),done(false),
 			width(width), height(height)
@@ -38,6 +38,7 @@ private:
 			
 			this->sprite.setTexture(this->textureSheet, true);
 			this->sprite.setTextureRect(this->startRect);
+			 //this->sprite.setOrigin(offset_x, offset_y);
 		}
 
 		//Functions
@@ -130,7 +131,7 @@ public:
 
 	void addAnimation(const std::string key
 		, float animation_timer,
-		int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height);
+		int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height, float offset_x, float offset_y);
 	//Accessor
 
 	

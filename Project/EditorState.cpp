@@ -39,6 +39,7 @@ void EditorState::initVariables()
 	this->type = TileTypes::DEFAULT;
 	this->cameraSpeed = 100.f;
 	this->layer = 0;
+	this->tileAddLock = false;
 }
 
 void EditorState::initView()
@@ -202,7 +203,18 @@ void EditorState::updateEditorInput(const float& dt)
 	{
 		if (!this->textureSelector->getActive()&& !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 		{
-			this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0,this->textureSelector->getTileIndex(), this->textureRect, this->collision, this->type);
+			if (this->tileAddLock)
+			{
+				if (this->tileMap->tileEmpty(this->mousePosGrid.x, this->mousePosGrid.y, 0))
+				{
+					this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureSelector->getTileIndex(), this->textureRect, this->collision, this->type);
+				}
+			}
+			else
+			{
+				this->tileMap->addtile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureSelector->getTileIndex(), this->textureRect, this->collision, this->type);
+
+			}
 		}
 		else {
 			this->selectorRect.setTexture(this->textureSelector->getTexture());
@@ -233,6 +245,18 @@ void EditorState::updateEditorInput(const float& dt)
 	{
 		if(this->type>0)
 			--this->type;
+	}
+	//Set lock on / off
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_TILE_LOCK"))) && this->getKeytime())
+	{
+		if (this->tileAddLock)
+		{
+			this->tileAddLock = false;
+
+		}
+		else
+			this->tileAddLock = true;
+		
 	}
 }
 
@@ -277,7 +301,8 @@ void EditorState::updateGui(const float& dt)
 		"\n" << this->textureRect.left << " " << this->textureRect.top <<
 		"\n" << "Collision: " << this->collision <<
 		"\n" <<"Type: "<< this->type <<
-		"\n" << "Tiles: "<< this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y, this->layer);
+		"\n" << "Tiles: "<< this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y, this->layer) <<
+		"\n" << "Tile locl: "<<this->tileAddLock;
 	this->cursorText.setString(ss.str());
 
 }

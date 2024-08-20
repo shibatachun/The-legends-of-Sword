@@ -29,6 +29,9 @@ public:
 	AttributeComponent(int level);
 	virtual ~AttributeComponent();
 	//Functions
+	void loseHP(const int hp);
+	void loseEXP(const int exp);
+	void gainHP(const int hp);
 	void calcExpNext();
 	std::string debugPrint() const;
 	void gainExp(const int exp);
