@@ -124,6 +124,12 @@
       <Filter>Item\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="SkillComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -210,6 +216,12 @@
       <Filter>Item\RangedWeapon</Filter>
     </ClInclude>
     <ClInclude Include="SkillComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

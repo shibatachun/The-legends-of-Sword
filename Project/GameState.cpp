@@ -121,6 +121,7 @@ GameState::~GameState()
 	delete this->player;
 	delete this->playerGUI;
 	delete this->tileMap;
+	
 }
 
 void GameState::updateView(const float& dt)
@@ -219,6 +220,7 @@ void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->update();
 	this->tileMap->updateCollision(this->player,dt);
+	
 }
 
 void GameState::update(const float& dt)
@@ -237,6 +239,8 @@ void GameState::update(const float& dt)
 
 		this->player->update(dt,this->mousePosView);
 		this->playerGUI->update(dt);
+
+	
 
 		
 		
@@ -270,6 +274,7 @@ void GameState::render(sf::RenderTarget* target )
 		sf::Vector2f(), false);*/
 	this->player->render(this->renderTexture,&this->core_shader, false);
 	//this->tileMap->renderDeferred(this->renderTexture,NULL,sf::Vector2f());
+	
 	this->tileMap->renderDeferred(this->renderTexture,&this->core_shader,this->player->getCenter());
 
 	//Render GUI

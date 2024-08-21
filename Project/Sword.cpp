@@ -26,8 +26,8 @@ void Sword::update(const sf::Vector2f mouse_Pos_View, const sf::Vector2f center)
 	float dx = mouse_Pos_View.x - this->weapon_sprite.getPosition().x;
 	float dy = mouse_Pos_View.y - this->weapon_sprite.getPosition().y;
 
-	const float PI = 3.14159265;
-	float deg = atan2(dy, dx) * 180 / PI;
+	const float PI = 3.14159265f;
+	float deg = atan2(dy, dx) * 180.f / PI;
 
 	this->weapon_sprite.setRotation(deg);
 }
