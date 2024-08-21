@@ -1,11 +1,14 @@
 #ifndef SKILLCOMPONENT_H
 #define SKILLCOMPONENT_H
+
+enum SKILLS { HEALTH = 0,ATTACK, ACCURACY, ENDURANCE };
 class SkillComponent
 {
 private:
 	class Skill
 	{
 	private:
+		int type;
 		int level;
 		int levelCap;
 		int exp;
@@ -13,8 +16,9 @@ private:
 
 
 	public:
-		Skill()
+		Skill(int type)
 		{
+			this->type = type;
 			this->level = 1;
 			this->levelCap = 99;
 			this->exp = 0;
@@ -25,10 +29,11 @@ private:
 
 		}
 		//Accessors
-		const int& getLevel() const { return this->level; }
-		const int& getLevelCap() const { return this->levelCap; }
-		const int& getExp() const { return this->exp; }
-		const int& getExpNex() const { return this->expNext; }
+		inline const int& getType() const { return this->type; }
+		inline const int& getLevel() const { return this->level; }
+		inline const int& getLevelCap() const { return this->levelCap; }
+		inline const int& getExp() const { return this->exp; }
+		inline const int& getExpNex() const { return this->expNext; }
 		//Modifers
 		void setLevel(const int level){this->level = level;}
 		void setLevelCap(const int level_cap){this->levelCap = level_cap;}
@@ -92,15 +97,16 @@ private:
 		}
 
 	};
-	std::map<std::string, Skill> skills;
-
+	
+	std::vector<Skill> skills;
 
 public:
 	SkillComponent();
 	virtual ~SkillComponent();
 
 
-	const int getSkill(std::string key) const;
+	const int getSkill(const int skill) const;
+	const void gainExp(const int skill, const int exp);
 };
 #endif
 

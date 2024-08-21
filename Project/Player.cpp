@@ -11,6 +11,14 @@ void Player::initComponents()
 {
 	
 }
+void Player::initAnimations()
+{
+	this->animationComponent->addAnimation("IDLE", 6.f, 0, 1, 8, 1, 74, 136, 0, 0);
+
+	this->animationComponent->addAnimation("WALK", 6.f, 0, 2, 9, 2, 68, 136, 0, 0);
+
+	this->animationComponent->addAnimation("ATTACK", 4.f, 0, 0, 4, 0, 112, 136, 0, 500.f);
+}
 //Constructors / Destructors
 Player::Player(float x, float y,sf::Texture& texture_sheet)
 {
@@ -18,20 +26,19 @@ Player::Player(float x, float y,sf::Texture& texture_sheet)
 	this->initComponents();
 	
 	
-	this->setPosition(x, y);
 	
 	this->createHitboxComponent(20.f, 25.f,65.f,75.f);
 	this->createMovementComponent(300.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
 	this->createSkillComponent();
-	std::cout << this->skillComponent->getSkill("health") << "\n";
+
+
+	this->setPosition(x, y);
+	this->initAnimations();
+	//std::cout << this->skillComponent->getSkill("health") << "\n";
 	//this->sprite.setScale(0.5f, 0.5f);
-	this->animationComponent->addAnimation("IDLE", 6.f,0,1,8,1,74,136,0,0);
-
-	this->animationComponent->addAnimation("WALK", 6.f,0,2,9,2,68,136,0,0);
-
-	this->animationComponent->addAnimation("ATTACK",4.f,0, 0, 4, 0, 112, 136,0,500.f);
+	
 
 	
 	
@@ -141,11 +148,11 @@ void Player::updateAnimation(const float& dt)
 
 void Player::update(const float& dt, sf::Vector2f& mouse_Pos_View)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	{
 		this->attributeComponent->gainExp(20);
 	}
-	this->attributeComponent->update();
+	this->attributeComponent->update();*/
 	/*system("cls");
 	std::cout << this->attributeComponent->debugPrint() << std::endl;*/
 	this->movementComponent->update(dt);

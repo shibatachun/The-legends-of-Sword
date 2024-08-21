@@ -75,7 +75,7 @@ void GameState::initShaders()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(0, 0, this->textures["PLAYER"]);
+	this->player = new Player(200.f, 200.f, this->textures["PLAYER"]);
 
 }
 
