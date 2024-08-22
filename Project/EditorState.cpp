@@ -197,6 +197,11 @@ void EditorState::updateGui(const float& dt)
 
 }
 
+void EditorState::updateMode(const float& dt)
+{
+	this->modes[DEFAULT_MODE]->update(dt);
+}
+
 void EditorState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
@@ -224,7 +229,7 @@ void EditorState::update(const float& dt)
 		this->updateButtons();
 		this->updateGui(dt);
 		this->updateEditorInput(dt);
-		this->modes[DEFAULT_MODE]->update(dt);
+		this->updateMode(dt);
 	}
 	else
 	{
@@ -244,7 +249,12 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 
 void EditorState::renderGui(sf::RenderTarget& target)
 {
-	this->modes[EditorModes::DEFAULT_MODE]->render(&target);
+	
+}
+
+void EditorState::renderModes(sf::RenderTarget& target)
+{
+	this->modes[EditorModes::DEFAULT_MODE]->render(target);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -261,7 +271,8 @@ void EditorState::render(sf::RenderTarget* target)
 	target->setView(this->window->getDefaultView());
 	this->renderButtons(*target);
 
-	this->modes[EditorModes::DEFAULT_MODE]->render(target);
+	this->renderGui(*target);
+	this->renderModes(*target);
 	
 	if (this->paused)
 	{

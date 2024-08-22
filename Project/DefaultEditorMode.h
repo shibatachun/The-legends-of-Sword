@@ -40,7 +40,7 @@ public:
 
     void renderGui(sf::RenderTarget& target);
 
-    void render(sf::RenderTarget* target = NULL);
+    void render(sf::RenderTarget& target);
 };
 
 #endif

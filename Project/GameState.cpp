@@ -272,7 +272,7 @@ void GameState::render(sf::RenderTarget* target )
 		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
 		NULL,
 		sf::Vector2f(), false);*/
-	this->player->render(this->renderTexture,&this->core_shader, false);
+	this->player->render(this->renderTexture,&this->core_shader,this->player->getCenter(), false);
 	//this->tileMap->renderDeferred(this->renderTexture,NULL,sf::Vector2f());
 	
 	this->tileMap->renderDeferred(this->renderTexture,&this->core_shader,this->player->getCenter());

@@ -19,6 +19,6 @@ public:
     virtual ~Enemy();
     void updateAnimation(const float& dt);
     void update(const float& dt, sf::Vector2f& mouse_Pos_View);
-    void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox);
+    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f light_position = sf::Vector2f(), const bool show_hitbox = false);
 };
 #endif
