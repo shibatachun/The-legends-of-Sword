@@ -622,3 +622,90 @@ void  gui::ProgressBar::render(sf::RenderTarget& target)
 	target.draw(this->inner);
 	target.draw(this->text);
 }
+//MESSAGEBOX ================================================================================================MESSAGEBOX
+
+gui::ConfirmationBox::ConfirmationBox(const std::string& promptText, const std::string& yesText, const std::string& noText)
+	:response(false), running(true)
+{
+
+
+	
+	background.setSize(sf::Vector2f(700, 200));
+	background.setFillColor(sf::Color(50, 50, 50));
+
+
+	yesButton.setSize(sf::Vector2f(100, 50));
+	yesButton.setFillColor(sf::Color::Green);
+	yesButton.setPosition(150, 100);
+
+	noButton.setSize(sf::Vector2f(100, 50));
+	noButton.setFillColor(sf::Color::Red);
+	noButton.setPosition(350, 100);
+
+
+	if (!font.loadFromFile("Fonts\\ThaleahFat.ttf")) {
+		std::cerr << "Failed to load font!" << std::endl;
+	}
+
+
+	text.setFont(font);
+	text.setString(promptText);
+	text.setCharacterSize(24);
+	text.setFillColor(sf::Color::White);
+	text.setPosition(120, 30);
+
+
+	this->yesText.setFont(font);
+	this->yesText.setString(yesText);
+	this->yesText.setCharacterSize(24);
+	this->yesText.setFillColor(sf::Color::White);
+	this->yesText.setPosition(200, 110);
+
+	this->noText.setFont(font);
+	this->noText.setString(noText);
+	this->noText.setCharacterSize(24);
+	this->noText.setFillColor(sf::Color::White);
+	this->noText.setPosition(400, 110);
+}
+
+gui::ConfirmationBox::~ConfirmationBox()
+{
+}
+
+bool gui::ConfirmationBox::show()
+{
+	window.create(sf::VideoMode(700, 200), "Confirmation Box");
+	while (running) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				running = false;
+			}
+			if (event.type == sf::Event::MouseButtonPressed) {
+				if (event.mouseButton.button == sf::Mouse::Left) {
+					sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+					if (yesButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+						response = true;
+						running = false;
+					}
+					else if (noButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+						response = false;
+						running = false;
+					}
+				}
+			}
+		}
+
+		window.clear();
+		window.draw(background);
+		window.draw(yesButton);
+		window.draw(noButton);
+		window.draw(text);
+		window.draw(yesText);
+		window.draw(noText);
+		window.display();
+	}
+	window.close();
+	return response;
+}

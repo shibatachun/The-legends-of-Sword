@@ -21,11 +21,11 @@ public:
 	const short& getType() const;
 	const int& getTileIndex() const;
 	//Functions
-	const sf::Vector2f& getPosition() const;
-	const bool& getCollision() const;
-	const sf::FloatRect getGlobalBounds() const;
-	const bool intersects(const sf::FloatRect bounds) const;
-	const std::string getAsString() const;
+	virtual const sf::Vector2f& getPosition() const;
+	virtual const bool& getCollision() const;
+	virtual const sf::FloatRect getGlobalBounds() const;
+	virtual const bool intersects(const sf::FloatRect bounds) const;
+	virtual const std::string getAsString() const;
 	
 	virtual void update();
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());

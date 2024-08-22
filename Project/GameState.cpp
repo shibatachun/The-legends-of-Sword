@@ -53,6 +53,11 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::FAILD_TO_LOAD_PLAYER_TEXTURE";
 	}
+
+	if (!this->textures["ENEMY"].loadFromFile("Resources/images/Sprites/Player/four_direction.png"))
+	{
+		throw "ERROR::GAME_STATE::FAILD_TO_LOAD_PLAYER_TEXTURE";
+	}
 	
 	
 }
@@ -112,6 +117,13 @@ GameState::GameState(StateData* state_data)
 	this->initPlayerGUI();
 	this->initTileMap();
 
+	this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["ENEMY"]));
+	this->activeEnemies.push_back(new Rat(500.f, 200.f, this->textures["ENEMY"]));
+	this->activeEnemies.push_back(new Rat(300.f, 400.f, this->textures["ENEMY"]));
+	this->activeEnemies.push_back(new Rat(100.f, 300.f, this->textures["ENEMY"]));
+	this->activeEnemies.push_back(new Rat(400.f, 200.f, this->textures["ENEMY"]));
+	this->activeEnemies.push_back(new Rat(600.f, 200.f, this->textures["ENEMY"]));
+
 	
 }
 
@@ -121,6 +133,10 @@ GameState::~GameState()
 	delete this->player;
 	delete this->playerGUI;
 	delete this->tileMap;
+	for (size_t i = 0; i < this->activeEnemies.size(); i++)
+	{
+		delete this->activeEnemies[i];
+	}
 	
 }
 
@@ -220,6 +236,10 @@ void GameState::updateTileMap(const float& dt)
 {
 
 	this->tileMap->update(this->player,dt);
+	for (auto* i : this->activeEnemies)
+	{
+		this->tileMap->update(i, dt);
+	}
 	
 }
 
@@ -240,7 +260,10 @@ void GameState::update(const float& dt)
 		this->player->update(dt,this->mousePosView);
 		this->playerGUI->update(dt);
 
-	
+		for (auto* i : this->activeEnemies)
+		{
+			i->update(dt, this->mousePosView);
+		}
 
 		
 		
@@ -272,6 +295,11 @@ void GameState::render(sf::RenderTarget* target )
 		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
 		NULL,
 		sf::Vector2f(), false);*/
+
+	for (auto* i : this->activeEnemies)
+	{
+		i->render(this->renderTexture, &this->core_shader, this->player->getCenter(), true);
+	}
 	this->player->render(this->renderTexture,&this->core_shader,this->player->getCenter(), false);
 	//this->tileMap->renderDeferred(this->renderTexture,NULL,sf::Vector2f());
 	

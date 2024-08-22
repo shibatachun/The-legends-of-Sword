@@ -6,6 +6,7 @@
 #include "Gui.h"
 #include "Entity.h"
 #include "QuadTree.h"
+#include "EnemySpawner.h"
 
 class Tile;
 class Entity;
@@ -22,7 +23,7 @@ private:
 	int tileSheetCount;
 	short tileIndex;
 	sf::Vector2i maxSize;    //maxSize
-	
+	gui::ConfirmationBox* box;
 	sf::Vector2f maxSizeWorldF;
 	std::vector < std::vector< std::vector<std::vector<Tile*> > > >  maps;
 	std::stack<Tile*> deferredRenderStack;
@@ -54,16 +55,19 @@ public:
 	const bool tileEmpty(const int x, const int y, const int z) const;
 	const sf::Texture* getTileSheet();
 	const sf::Vector2f getMaxMapSize();
+	const int getType(const int x, const int y, const int z) const;
 	const int getLayerSize(const int x, const int y, const int z) const;
 	const sf::Vector2i& getMaxSizeGrid() const;
 	const sf::Vector2f& getMaxSizeF() const;
 
 	//Functions
 	void addtile(const int x, const int y, const int z,  int tileIndex , const sf::IntRect &texture_rect, const bool& collision, const short& type);
-	void removeTile(const int x, const int y, const int z);
+	void removeTile(const int x, const int y, const int z , const int type);
 
 	void saveToFile(const std::string file_name);
 	void loadFromFile(const std::string file_name);
+
+
 
 
 	void update(Entity* entity, const float& dt);

@@ -7,7 +7,7 @@
 #include "PlayerGUI.h"
 #include "Sword.h"
 #include "Bow.h"
-#include "Enemy.h"
+#include "Enemies_include.h"
 
 class PauseMenu;
 class Player;
@@ -34,7 +34,7 @@ private:
     sf::Shader core_shader;
 
     Player* player;
-  
+    std::vector<Enemy*> activeEnemies;
     PlayerGUI* playerGUI;
     sf::Font font;
     //Resources

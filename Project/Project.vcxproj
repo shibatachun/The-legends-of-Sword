@@ -148,6 +148,7 @@
     <ClCompile Include="DefaultEditorMode.cpp" />
     <ClCompile Include="EditorMode.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyEditorMode.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="Gui.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="PlayerGUI.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
+    <ClCompile Include="Rat.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="SkillComponent.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
@@ -186,7 +188,10 @@
     <ClInclude Include="Bow.h" />
     <ClInclude Include="DefaultEditorMode.h" />
     <ClInclude Include="EditorMode.h" />
+    <ClInclude Include="EditorModes.h" />
+    <ClInclude Include="Enemies_include.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyEditorMode.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Gui.h" />
@@ -204,6 +209,7 @@
     <ClInclude Include="PlayerGUI.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="RangedWeapon.h" />
+    <ClInclude Include="Rat.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SkillComponent.h" />

@@ -94,7 +94,7 @@ void DefaultEditorMode::updateInput(const float& dt)
 	{
 		if (!this->textureSelector->getActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorStateData->mousePosWindow)))
 		{
-			this->tileMap->removeTile(this->editorStateData->mousePosGrid->x, this->editorStateData->mousePosGrid->y, 0);
+			this->tileMap->removeTile(this->editorStateData->mousePosGrid->x, this->editorStateData->mousePosGrid->y, 0,0);
 		}
 	}
 
@@ -189,6 +189,7 @@ void DefaultEditorMode::update(const float& dt)
 
 void DefaultEditorMode::renderGui(sf::RenderTarget& target)
 {
+	//std::cout << "default mode running" << std::endl;
 	for (auto& it : this->buttons)
 	{
 		it.second->render(target);
@@ -196,7 +197,7 @@ void DefaultEditorMode::renderGui(sf::RenderTarget& target)
 
 	if (!this->textureSelector->getActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(*this->editorStateData->mousePosView)))
 	{
-		//std::cout << "jinlaile" << std::endl;
+		
 		if (this->editorStateData->mousePosView->x < this->tileMap->getMaxMapSize().x && this->editorStateData->mousePosView->y < this->tileMap->getMaxMapSize().y)
 		{
 			

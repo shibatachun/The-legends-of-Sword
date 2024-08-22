@@ -174,6 +174,25 @@ namespace gui{
 		void render(sf::RenderTarget& target);
 		
 	};
+
+	class ConfirmationBox {
+	public:
+		ConfirmationBox(const std::string& promptText, const std::string& yesText, const std::string& noText);
+		virtual ~ConfirmationBox();
+		bool show();
+	
+	private:
+		sf::RenderWindow window;
+		sf::RectangleShape background;
+		sf::RectangleShape yesButton;
+		sf::RectangleShape noButton;
+		sf::Font font;
+		sf::Text text;
+		sf::Text yesText;
+		sf::Text noText;
+		bool response;
+		bool running;
+	};
 }
 
 

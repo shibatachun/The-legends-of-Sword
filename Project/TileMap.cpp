@@ -42,7 +42,7 @@ TileMap::TileMap(float gridSize, int width, int height, std::map<int, std::strin
 	this->layers = 1;
 	this->textureFileSet = textureFileSet;
 	this->quadtree = new QuadTree<Tile>(sf::FloatRect(0, 0, this->maxSizeWorldF.x, this->maxSizeWorldF.y));
-
+	this->box = new gui::ConfirmationBox("Are you sure to save the map? It will rewrite your previous map.", "Yes", "NO");
 	this->fromX = 0;
 	this->toX = 0;
 	this->fromY = 0;
@@ -96,12 +96,14 @@ TileMap::TileMap(const std::string file_name, std::map<int, std::string>& textur
 	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
 	this->collisionBox.setOutlineColor(sf::Color::Red);
 	this->collisionBox.setOutlineThickness(1.f);
+	
 }
 
 TileMap::~TileMap()
 {
 	this->clear();
 	delete this->quadtree;
+	delete this->box;
 }
 
 //initializer
@@ -156,10 +158,12 @@ const int TileMap::getLayerSize(const int x, const int y, const int z) const
 	}
 	return -1;
 }
+
 const sf::Vector2i& TileMap::getMaxSizeGrid() const
 {
 	return this->maxSize;
 }
+
 const sf::Vector2f& TileMap::getMaxSizeF() const
 {
 	return this->maxSizeWorldF;
@@ -185,7 +189,7 @@ void TileMap::addtile(const int x, const int y, const int z, int tileIndex ,cons
 	}
 }
 
-void TileMap::removeTile(const int x, const int y, const int z)
+void TileMap::removeTile(const int x, const int y, const int z, const int type)
 {
 	//Take two indicies from the mouse position in the grid and remove a tile at that position if the internal tilemap array allows it.
 	if (x < this->maxSize.x && x >= 0 &&
@@ -195,8 +199,21 @@ void TileMap::removeTile(const int x, const int y, const int z)
 		if (!this->maps[x][y][z].empty())
 		{
 			/*Ok to remove tile*/
-			delete this->maps[x][y][z][this->maps[x][y][z].size()-1];
-			this->maps[x][y][z].pop_back();
+			if (type >= 0)
+			{
+				if (this->getType(x, y, z) == type)
+				{
+					delete this->maps[x][y][z][this->maps[x][y][z].size() - 1];
+					this->maps[x][y][z].pop_back();
+				}
+				
+			}
+			else
+			{
+				delete this->maps[x][y][z][this->maps[x][y][z].size() - 1];
+				this->maps[x][y][z].pop_back();
+			}
+		
 
 		}
 	}
@@ -214,8 +231,14 @@ void TileMap::saveToFile(const std::string file_name)
 	All Tiles:
 	gridPos x y ,layer, Texture rect x y, collision, type
 	*/
+	
 
+	if (!this->box->show())
+	{
+		return;
+	}
 	std::ofstream out_file;
+
 	out_file.open(file_name);
 	if (out_file.is_open())
 	{
@@ -313,6 +336,7 @@ void TileMap::loadFromFile(const std::string file_name)
 			std::cout << "ERROR::TILEMAP::FAILED TO LOAD TILETEXTURESHEET." << "\n";
 		}*/
 		//load all tiles
+	
 		while (in_file >> x>>y>>z >> index>> trX >> trY>>collision>>type)
 		{
 			Tile* tile = new Tile(
@@ -341,6 +365,13 @@ void TileMap::loadFromFile(const std::string file_name)
 
 
 }
+
+const int TileMap::getType(const int x, const int y, const int z) const
+{
+	return this->maps[x][y][this->layer].back()->getType();
+}
+
+
 
 //void TileMap::updateCollision(Entity* entity, const float& dt)
 //{
@@ -680,6 +711,11 @@ void TileMap::render(sf::RenderTarget& target,const int range_x, const int range
 							target.draw(this->collisionBox);
 
 						}
+					}
+					if (this->maps[x][y][this->layer][k]->getType() == TileTypes::ENEMYSPAWN)
+					{
+						this->collisionBox.setPosition(this->maps[x][y][this->layer][k]->getPosition());
+						target.draw(this->collisionBox);
 					}
 				
 				
