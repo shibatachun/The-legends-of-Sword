@@ -6,11 +6,11 @@ void TileMap::clear()
 
 	if (!this->maps.empty())
 	{
-		for (int x = 0; x < this->maxSize.x; x++)
+		for (int x = 0; x < this->maps.size(); x++)
 		{
-			for (int y = 0; y < this->maxSize.y; y++)
+			for (int y = 0; y < this->maps[x].size(); y++)
 			{
-				for (int z = 0; z < this->layers; z++)
+				for (int z = 0; z < this->maps[x][y].size(); z++)
 				{
 					for (size_t k = 0; k < this->maps[x][y][z].size(); k++)
 					{
@@ -484,7 +484,7 @@ void TileMap::loadFromFile(const std::string file_name)
 //
 //}
 
-void TileMap::updateCollision(Entity* entity, const float& dt)
+void TileMap::update(Entity* entity, const float& dt)
 {
 	//World Bounds
 	if (entity->getPosition().x < 0.f)
@@ -515,15 +515,16 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 	sf::Vector2i entityGridPos = entity->getGridPosition(this->gridSizeI);
 	sf::Vector2f entityVelocity = entity->getVelocity();
 	//std::cout << "x: " << entityVelocity.x << "y:" << entityVelocity.y << std::endl;
+
 	sf::FloatRect entityBounds(static_cast<float>((entityGridPos.x - range) * this->gridSizeI),
 		static_cast<float>((entityGridPos.y - range) * this->gridSizeI),
 		static_cast<float>((2 * range + 1) * this->gridSizeI),
 		static_cast<float>((2 * range + 1) * this->gridSizeI));
+
 	//std::cout << "entity bounds" << entityBounds.getPosition().x << " " << entityBounds.getPosition().y << std::endl;
 	std::vector<Tile*> potentialColliders;
 	this->quadtree->query(entityBounds, potentialColliders,entityVelocity); 
 	
-
 	std::sort(potentialColliders.begin(), potentialColliders.end(), [](const Tile* a, const Tile* b) {
 		return a->getGlobalBounds().left < b->getGlobalBounds().left;
 		}
@@ -537,11 +538,12 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 	int count = 0;
 	for (Tile* tile : potentialColliders) {
 		if (tile != NULL) {
-			
+
+			tile->update();
 			sf::FloatRect playerBounds = entity->getGlobalBounds();
 			sf::FloatRect wallBounds = tile->getGlobalBounds();
 			sf::FloatRect nextPositionBound = entity->getNextPositionBounds(dt);
-			
+		
 			if (wallBounds.left+wallBounds.width < playerBounds.left && entityVelocity.x>0) //walk left
 			{
 				continue;
@@ -601,9 +603,6 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 	//std::cout << "total potentialColliders size: " << potentialColliders.size() << ", Total check count:  " << count << std::endl;
 }
 
-void TileMap::update()
-{
-}
 
 void TileMap::render(sf::RenderTarget& target,const int range_x, const int range_y, const sf::Vector2i& gridPosition, sf::Shader* shader, sf::Vector2f playerPosition, const bool show_collision)
 {

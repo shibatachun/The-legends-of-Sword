@@ -5,6 +5,7 @@ Tile::Tile()
 {
 	this->collision = false;
 	this->type = 0;
+	this->tileSheetIndex = 0;
 }
 
 Tile::Tile(int x, int y, float gridSizeF, int tileSheetIndex, const sf::Texture& texture, const sf::IntRect texture_rect,
@@ -66,11 +67,11 @@ const std::string Tile::getAsString() const
 
 	return ss.str();
 }
-void Tile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f playerPosition)
+void Tile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f player_position)
 {
 	if (shader)
 	{
-		shader->setUniform("lightPos", playerPosition);
+		shader->setUniform("lightPos", player_position);
 		shader->setUniform("hasTexture", true);
 		target.draw(this->shape, shader);
 	}
@@ -84,4 +85,5 @@ void Tile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector
 
 void Tile::update()
 {
+	//this->shape.setColor(sf::Color::Red);
 }

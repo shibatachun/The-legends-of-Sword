@@ -333,7 +333,8 @@ gui::TextureSelector::TextureSelector(float x, float y, float width,
 	this->tileSheetCount = 0;
 	this->tileIndex = 0;
 	this->textureTilePathSet = textureTilePathSet;
-
+	
+	std::cout << textureTilePathSet.size() << std::endl;
 	this->bounds.setSize(sf::Vector2f(width, height));
 	this->bounds.setPosition(x + offset, y);
 	this->bounds.setFillColor(sf::Color(50, 50, 50, 100));
@@ -403,14 +404,19 @@ void gui::TextureSelector::initButton()
 
 void gui::TextureSelector::initTileSheetSet()
 {
+	std::cout << this->textureTilePathSet.size() << std::endl;
+
 	for (auto& i : this->textureTilePathSet)
 	{
-
+		std::cout << "1" << std::endl;
+		
 		if (this->tileSheetSet[this->tileSheetCount].loadFromFile(i.second))
 			tileSheetCount++;
+			
 		else
 			std::cout << "ERROR::CAN NOT LOAD FROM TEXTURE FILE";
 	}
+	std::cout << this->tileSheetCount << std::endl;
 }
 //Accessors
 const bool& gui::TextureSelector::getActive() const
@@ -456,8 +462,11 @@ void gui::TextureSelector::setPosition(const float x, const float y)
 //Functions
 void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
 {
+
+	
 	if (!this->hidden)
 	{
+		
 		updateButtons(mousePosWindow);
 		updateKeytime(dt);
 		if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow))
@@ -492,6 +501,7 @@ void gui::TextureSelector::updateButtons(const sf::Vector2i& mousePosWindow)
 	/*Update all the buttons in the state and handles their functionality */
 	for (auto& it : this->buttons)
 	{
+		//std::cout << mousePosWindow.x << " " << mousePosWindow.y << std::endl;
 		it.second->update(mousePosWindow);
 
 	}
@@ -540,10 +550,10 @@ void gui::TextureSelector::updateKeytime(const float& dt)
 
 void gui::TextureSelector::render(sf::RenderTarget& target)
 {
-	
 	if (!this->hidden)
 	{
-		
+		//std::cout << "yes" << std::endl;
+
 		target.draw(this->bounds);
 		target.draw(this->buttonBar);
 		target.draw(this->sheet);
@@ -554,6 +564,7 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 		}
 
 		if (this->active)
+			//std::cout << "yes" << std::endl;
 			target.draw(this->seletor);
 	}
 

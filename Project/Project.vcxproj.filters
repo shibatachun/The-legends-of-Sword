@@ -22,9 +22,6 @@
     <Filter Include="Components">
       <UniqueIdentifier>{0ff47a7e-c4d9-4c86-aee5-63de64f71f71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tile">
-      <UniqueIdentifier>{52d57854-d86b-4810-bf8c-fbd0ab7a0638}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{f486b49f-d02d-4b75-91ec-173936fa370b}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,12 @@
     </Filter>
     <Filter Include="Item\RangedWeapon">
       <UniqueIdentifier>{8c564b5e-9c9a-499f-b678-2eb673cbe312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Tile">
+      <UniqueIdentifier>{52d57854-d86b-4810-bf8c-fbd0ab7a0638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\EditorModes">
+      <UniqueIdentifier>{cf4c45d6-0876-458d-bd28-7c9f15617ac5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +82,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Tile</Filter>
+      <Filter>Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="PauseMenu.cpp">
       <Filter>GUI</Filter>
@@ -130,7 +133,13 @@
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawner.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorMode.cpp">
+      <Filter>States\EditorModes</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultEditorMode.cpp">
+      <Filter>States\EditorModes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +180,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Tile</Filter>
+      <Filter>Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
       <Filter>GUI</Filter>
@@ -222,7 +231,13 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawner.h">
-      <Filter>头文件</Filter>
+      <Filter>Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorMode.h">
+      <Filter>States\EditorModes</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultEditorMode.h">
+      <Filter>States\EditorModes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

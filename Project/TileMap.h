@@ -66,8 +66,8 @@ public:
 	void loadFromFile(const std::string file_name);
 
 
-	void updateCollision(Entity* entity, const float& dt);
-	void update();
+	void update(Entity* entity, const float& dt);
+
 	void render(sf::RenderTarget& target, 
 		const int range_x, const int range_y ,
 		const sf::Vector2i& gridPosition,
@@ -78,3 +78,4 @@ public:
 
 
 #endif
+ 

@@ -4,51 +4,57 @@
 #include "Gui.h"
 #include "PauseMenu.h"
 #include "TileMap.h"
+#include "DefaultEditorMode.h"
 
 class State;
+class StateData;
 class Gui;
 class PauseMenu;
 class TileMap;
+class Tile;
+class EditorMode;
+class DefaultEditorMode;
+class EditorStateData;
+
+
+enum EditorModes {DEFAULT_MODE = 0, ENMEY};
+
+
 
 class EditorState :
     public State
 {
 private:
     //Variables
-    
+    EditorStateData editorStateData;
+
     sf::View view;
+    float cameraSpeed;
     sf::Font  font;
-    sf::Text cursorText;
-    sf::Vector2f mousePositionOffset;
     PauseMenu* pmenu;
+ 
+    sf::Vector2f mousePositionOffset;
+   
     std::map<std::string, gui::Button*> buttons;
 
     TileMap* tileMap;
-    sf::RectangleShape sidebar;
-    sf::IntRect textureRect;
-    sf::RectangleShape selectorRect;
-    std::map<int, std::string> textureFileSet;
-    gui::TextureSelector* textureSelector;
 
-    sf::RectangleShape collisionBox;
 
-    float cameraSpeed;
-    bool collision;
-    short type; 
-    int layer;
-    bool tileAddLock;
+
+    std::vector<EditorMode*> modes;
+
     //Functions
     void initVariables();
+    void initEditorStateData();
     void initView();
-    void initBackground();
     void initFonts();
-    void initText();
+  
     void initKeybinds();
     void initButtons();
     void initPauseMenu();
     void initGui();
     void initTileMap();
-    void initTextureFileSets();
+    void initModes();
 
 public:
     EditorState(StateData *state_data);
