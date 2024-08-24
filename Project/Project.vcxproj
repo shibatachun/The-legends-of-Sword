@@ -150,6 +150,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyEditorMode.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="EnemySystem.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="EditorState.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Rat.cpp" />
+    <ClCompile Include="RegularTile.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="SkillComponent.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
@@ -181,6 +184,7 @@
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationComponent.h" />
@@ -193,6 +197,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyEditorMode.h" />
     <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="EditorState.h" />
@@ -200,7 +205,9 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="HitboxComponent.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Items.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="MovementComponent.h" />
@@ -210,6 +217,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Rat.h" />
+    <ClInclude Include="RegularTile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SkillComponent.h" />
@@ -219,6 +227,7 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Artistinfo2.png" />

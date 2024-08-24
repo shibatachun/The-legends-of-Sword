@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword()
+Sword::Sword(unsigned value, std::string texture_file)
+	:MeleeWeapon(value,texture_file)
 {
-	if (!this->weapone_texture.loadFromFile("Resources/images/Sprites/Player/Sniper.png"))
-		std::cout << "ERROR::PLAYER::COULD NOT LOAD TEXTURE";
-	this->weapon_sprite.setTexture(this->weapone_texture);
+
 
 	this->weapon_sprite.setOrigin((this->weapon_sprite.getGlobalBounds().width / 2.f) - 10.f,
 		(this->weapon_sprite.getGlobalBounds().height / 2.f) + 20.f);
@@ -16,6 +15,11 @@ Sword::Sword()
 
 Sword::~Sword()
 {
+}
+
+Sword* Sword::clone()
+{
+	return new Sword(*this);
 }
 
 void Sword::update(const sf::Vector2f mouse_Pos_View, const sf::Vector2f center)

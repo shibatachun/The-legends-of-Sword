@@ -28,9 +28,14 @@ Tile::~Tile()
 }
 const short& Tile::getType() const
 {
+
 	return this->type;
 
 }
+	
+	
+
+
 const int& Tile::getTileIndex() const
 {
 	return this->tileSheetIndex;
@@ -59,11 +64,13 @@ const bool Tile::intersects(const sf::FloatRect bounds) const
 {
 	return this->shape.getGlobalBounds().intersects(bounds);
 }
+
+
 const std::string Tile::getAsString() const
 {
 	std::stringstream ss;
 
-	ss<< this->tileSheetIndex <<" "<< this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
+	ss<<this->type << " " << this->tileSheetIndex <<" "<< this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision  ;
 
 	return ss.str();
 }

@@ -78,6 +78,11 @@ void GameState::initShaders()
 	
 }
 
+void GameState::initEnemySytem()
+{
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+}
+
 void GameState::initPlayers()
 {
 	this->player = new Player(200.f, 200.f, this->textures["PLAYER"]);
@@ -115,14 +120,10 @@ GameState::GameState(StateData* state_data)
 	this->initShaders();
 	this->initPlayers();
 	this->initPlayerGUI();
+	this->initEnemySytem();
 	this->initTileMap();
 
-	this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["ENEMY"]));
-	this->activeEnemies.push_back(new Rat(500.f, 200.f, this->textures["ENEMY"]));
-	this->activeEnemies.push_back(new Rat(300.f, 400.f, this->textures["ENEMY"]));
-	this->activeEnemies.push_back(new Rat(100.f, 300.f, this->textures["ENEMY"]));
-	this->activeEnemies.push_back(new Rat(400.f, 200.f, this->textures["ENEMY"]));
-	this->activeEnemies.push_back(new Rat(600.f, 200.f, this->textures["ENEMY"]));
+
 
 	
 }
@@ -132,11 +133,13 @@ GameState::~GameState()
 	delete this->pmenu;
 	delete this->player;
 	delete this->playerGUI;
+	delete this->enemySystem;
 	delete this->tileMap;
 	for (size_t i = 0; i < this->activeEnemies.size(); i++)
 	{
 		delete this->activeEnemies[i];
 	}
+
 	
 }
 
@@ -232,16 +235,30 @@ void GameState::updatePauseMenuButtons()
 	}
 }
 
-void GameState::updateTileMap(const float& dt)
+void GameState::updatePlayer(const float& dt)
+{
+}
+
+void GameState::updateEnemies(const float& dt)
 {
 
-	this->tileMap->update(this->player,dt);
+}
+void GameState::updateTileMap(const float& dt)
+{
+	this->tileMap->updateWorldBoundSColision(this->player,dt);
+	this->tileMap->updateTileCollision(this->player, dt);
+	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
+
+	//this->tileMap->update(this->player,dt);
 	for (auto* i : this->activeEnemies)
 	{
-		this->tileMap->update(i, dt);
+		this->tileMap->updateWorldBoundSColision(i, dt);
+		this->tileMap->updateTileCollision(i, dt);
 	}
 	
 }
+
+
 
 void GameState::update(const float& dt)
 {

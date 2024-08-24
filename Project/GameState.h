@@ -7,16 +7,9 @@
 #include "PlayerGUI.h"
 #include "Sword.h"
 #include "Bow.h"
-#include "Enemies_include.h"
 
-class PauseMenu;
-class Player;
-class PlayerGUI;
-class TileMap;
-class Enemy;
-class sf::View;
-class sf::Font;
-class sf::RenderTexture;
+
+
 
 
 class GameState :
@@ -39,6 +32,7 @@ private:
     sf::Font font;
     //Resources
     std::map<std::string, sf::Texture> textures;
+    EnemySystem* enemySystem;
     TileMap* tileMap;
     //Functions
     void initDeferredRender();
@@ -48,9 +42,11 @@ private:
     void initTextures();
     void initPauseMenu();
     void initShaders();
+    void initEnemySytem();
     void initPlayers();
     void initPlayerGUI();
     void initTileMap();
+   
 
 public:
     GameState(StateData *state_data);
@@ -64,6 +60,8 @@ public:
     void updatePlayerGUI(const float& dt);
     void updatePauseMenuButtons();
     void updateTileMap(const float& dt);
+    void updatePlayer(const float& dt);
+    void updateEnemies(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

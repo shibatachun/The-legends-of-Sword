@@ -5,6 +5,11 @@ void Player::initVariables()
 {
 	this->maxVelocity = 0;
 	this->attacking = false;
+	this->sword = new Sword(20,"Resources/images/Sprites/Player/Sniper.png");
+	
+
+
+	
 }
 
 void Player::initComponents()
@@ -18,6 +23,10 @@ void Player::initAnimations()
 	this->animationComponent->addAnimation("WALK", 6.f, 0, 2, 9, 2, 68, 136, 0, 0);
 
 	this->animationComponent->addAnimation("ATTACK", 4.f, 0, 0, 4, 0, 112, 136, 0, 500.f);
+}
+void Player::initInventory()
+{
+	this->inventory = new Inventory(100);
 }
 //Constructors / Destructors
 Player::Player(float x, float y,sf::Texture& texture_sheet)
@@ -36,10 +45,11 @@ Player::Player(float x, float y,sf::Texture& texture_sheet)
 
 	this->setPosition(x, y);
 	this->initAnimations();
+	this->initInventory();
 	//std::cout << this->skillComponent->getSkill("health") << "\n";
 	//this->sprite.setScale(0.5f, 0.5f);
 	
-
+	 
 	
 	
 	//this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 0, 3, 3, 3, 300, 48);
@@ -51,6 +61,9 @@ Player::Player(float x, float y,sf::Texture& texture_sheet)
 
 Player::~Player()
 {
+	delete this->inventory;
+	delete this->sword;
+
 }
 
 
@@ -161,7 +174,7 @@ void Player::update(const float& dt, sf::Vector2f& mouse_Pos_View)
 	this->hitboxComponent->update();
 	this->updateAnimation(dt);
 
-	this->sword.update(mouse_Pos_View, this->getCenter());
+	this->sword->update(mouse_Pos_View, this->getCenter());
 
 	
 
@@ -179,12 +192,12 @@ void Player::render(sf::RenderTarget& target,sf::Shader* shader, const sf::Vecto
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", light_position);
 		
-		this->sword.render(target, shader);
+		this->sword->render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		this->sword.render(target);
+		this->sword->render(target);
 	}
 	
 	if(show_hitbox)
