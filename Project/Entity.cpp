@@ -121,6 +121,12 @@ const sf::Vector2f& Entity::getVelocity() const
 
 
 
+const float Entity::getDistance(const Entity& entity) const
+{
+	//std::cout << sqrt(pow(this->getCenter().x - entity.getCenter().x, 2) + pow(this->getCenter().y - entity.getCenter().y, 2)) << std::endl;
+	return sqrt(pow(this->getCenter().x - entity.getCenter().x, 2) + pow(this->getCenter().y - entity.getCenter().y, 2));
+}
+
 //Functions
 void Entity::move(const float dir_x, const float dir_y, const float dt)
 {

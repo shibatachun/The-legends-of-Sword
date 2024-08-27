@@ -46,17 +46,7 @@ Player::Player(float x, float y,sf::Texture& texture_sheet)
 	this->setPosition(x, y);
 	this->initAnimations();
 	this->initInventory();
-	//std::cout << this->skillComponent->getSkill("health") << "\n";
-	//this->sprite.setScale(0.5f, 0.5f);
-	
-	 
-	
-	
-	//this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 0, 3, 3, 3, 300, 48);
 
-	//this->animationComponent->addAnimation("WALK_UP", 1.f, 0, 2, 3, 2, 48, 48);
-
-	//this->animationComponent->addAnimation("WALK_DOWN", 1.f, 0, 0, 3, 0, 48, 48);
 }
 
 Player::~Player()
@@ -66,6 +56,11 @@ Player::~Player()
 
 }
 
+
+Weapon* Player::getWeapon() const
+{
+	return this->sword;
+}
 
 //Acceesor
 AttributeComponent* Player::getAttributeComponent() 
@@ -98,14 +93,6 @@ void Player::gainEXP(const int exp)
 
 }
 
-void Player::updataAttack()
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
-	{
-		this->attacking = true;
-
-	}
-}
 
 void Player::updateAnimation(const float& dt)
 {
@@ -169,7 +156,7 @@ void Player::update(const float& dt, sf::Vector2f& mouse_Pos_View)
 	/*system("cls");
 	std::cout << this->attributeComponent->debugPrint() << std::endl;*/
 	this->movementComponent->update(dt);
-	this->updataAttack();
+
 	
 	this->hitboxComponent->update();
 	this->updateAnimation(dt);

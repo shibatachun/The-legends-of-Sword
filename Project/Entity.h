@@ -54,6 +54,7 @@ public:
 	virtual void setPosition(const float x, const float y);
 	
 	//Functions
+	virtual const float getDistance(const Entity& entity) const;
 	virtual void move( const float x, const float y,const float dt );
 	virtual void stopVelocity();
 	virtual void stopVelocityX();

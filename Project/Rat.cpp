@@ -13,6 +13,7 @@ void Rat::initAnimations()
 	this->animationComponent->addAnimation("WALK_DOWN", 6.f, 0, 0, 3, 0, 48, 48, 0, 0);
 	this->animationComponent->addAnimation("WALK_LEFT", 6.f, 0, 1, 3, 1, 48, 48, 0, 0);
 	this->animationComponent->addAnimation("WALK_RIGHT", 6.f, 0, 3, 3, 3, 48, 48, 0, 0);
+	this->animationComponent->addAnimation("HIT", 6.f, 0, 3, 3, 3, 48, 48, 0, 0);
 
 	//this->animationComponent->addAnimation("AT", 4.f, 0, 0, 4, 0, 48, 48, 0, 0);
 }
@@ -27,6 +28,7 @@ Rat::Rat(float x, float y, sf::Texture& texture_sheet)
 	this->createHitboxComponent(0.f, 0.f, 48.f, 48.f);
 	this->createMovementComponent(300.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
+	this->createAttributeComponent(1);
 
 
 	this->setPosition(x, y);
@@ -47,6 +49,7 @@ Rat::Rat(float x, float y, sf::Texture& texture_sheet)
 Rat::~Rat()
 {
 }
+
 void Rat::updateAnimation(const float& dt)
 {
 

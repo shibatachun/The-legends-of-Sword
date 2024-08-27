@@ -49,6 +49,9 @@
     <Filter Include="Item\Weapon\RangedWeapon">
       <UniqueIdentifier>{8c564b5e-9c9a-499f-b678-2eb673cbe312}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{320b590d-5d94-4f7d-867a-bdcefd49ce2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="TextTagSystem.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +296,9 @@
     <ClInclude Include="Weapon.h">
       <Filter>Item\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="TextTagSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Artistinfo2.png">
@@ -297,11 +306,11 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertex_shader.vert">
-      <Filter>资源文件</Filter>
-    </None>
     <None Include="fragment_shader.frag">
-      <Filter>资源文件</Filter>
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="vertex_shader.vert">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

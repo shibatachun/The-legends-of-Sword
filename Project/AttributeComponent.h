@@ -35,6 +35,7 @@ public:
 	void calcExpNext();
 	std::string debugPrint() const;
 	void gainExp(const int exp);
+	const bool isDead() const;
 	void updateStates(const bool rest);
 	void updateLevel();
 	void update();

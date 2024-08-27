@@ -201,25 +201,14 @@ void GameState::updateInput(const float& dt)
 
 void GameState::updatePlayerInput(const float& dt)
 {
-	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 		this->player->move(-1.f, 0.f,dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
 		this->player->move(1.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-	{
 		this->player->move(0.f, -1.f,dt);
-		if (this->getKeytime())
-			this->player->gainEXP(10);
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-	{
 		this->player->move(0.f, 1.f, dt);
-		if (this->getKeytime())
-			this->player->loseEXP(1);
-
-	}
-	
 }
 
 void GameState::updatePlayerGUI(const float& dt)
@@ -238,23 +227,53 @@ void GameState::updatePauseMenuButtons()
 void GameState::updatePlayer(const float& dt)
 {
 }
-
+/*
+* update combat and enemy
+*/
 void GameState::updateEnemies(const float& dt)
 {
+	unsigned index = 0;
+	for (auto* enemy : this->activeEnemies)
+	{
 
+		enemy->update(dt, this->mousePosView);
+		this->tileMap->updateWorldBoundSColision(enemy, dt);
+		this->tileMap->updateTileCollision(enemy, dt);
+		this->updateCombat(enemy,index, dt);
+
+		//Dangerous!!
+		if (enemy->isDead())
+		{
+			this->player->gainEXP(enemy->getGainExp());
+			this->activeEnemies.erase(this->activeEnemies.begin() + index);
+			--index;
+		}
+		++index;
+	}
+}
+void GameState::updateCombat(Enemy* enemy, const int index,const float& dt)
+{
+	
+	
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			if (this->player->getWeapon()->getAttackTimer() &&
+				enemy->getGlobalBounds().contains(this->mousePosView) &&
+				enemy->getDistance(*this->player)<30.f)
+			{
+				//TODO: attacl animation
+				enemy->takeDamage(this->player->getWeapon()->getDamageMin());
+				std::cout << enemy->getAttributeComp()->hp << std::endl;
+				
+			}
+		}
+	
 }
 void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->updateWorldBoundSColision(this->player,dt);
 	this->tileMap->updateTileCollision(this->player, dt);
 	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
-
-	//this->tileMap->update(this->player,dt);
-	for (auto* i : this->activeEnemies)
-	{
-		this->tileMap->updateWorldBoundSColision(i, dt);
-		this->tileMap->updateTileCollision(i, dt);
-	}
 	
 }
 
@@ -277,12 +296,9 @@ void GameState::update(const float& dt)
 		this->player->update(dt,this->mousePosView);
 		this->playerGUI->update(dt);
 
-		for (auto* i : this->activeEnemies)
-		{
-			i->update(dt, this->mousePosView);
-		}
+		this->updateEnemies(dt);
 
-		
+	
 		
 	}
 	else //Pause update
